@@ -1,121 +1,59 @@
 (function () {
     'use strict';
 
+    // Prevent duplicate execution
+    if (window.__lunelBundlesLoaded) return;
+    window.__lunelBundlesLoaded = true;
+
     const LUNEL_BUNDLES_ROOT_ID = 'lunel-bundles-root';
     const WAIT_MAX_MS = 12000;
 
-    const BUNDLES_BY_PRODUCT_ID = {
-        1904366049: {
-            bundles: [
-                {
-                    id: 'bundle-1',
-                    title: 'مجموعة لوليل المتكاملة',
-                    discountText: 'وفر %40',
-                    selected: false,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-                {
-                    id: 'bundle-2',
-                    title: 'مجموعة التفتيح والنضارة',
-                    discountText: 'وفر %30',
-                    selected: true,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-            ],
-        },
-        1839649229: {
-            bundles: [
-                {
-                    id: 'bundle-1',
-                    title: 'مثال — مجموعة أ',
-                    discountText: 'وفر %40',
-                    selected: false,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-                {
-                    id: 'bundle-2',
-                    title: 'مثال — مجموعة ب',
-                    discountText: 'وفر %30',
-                    selected: true,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-            ],
-        },
-        935405481: {
-            bundles: [
-                {
-                    id: 'bundle-3',
-                    title: 'مثال — مجموعة ج',
-                    discountText: 'وفر %25',
-                    selected: true,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-                {
-                    id: 'bundle-4',
-                    title: 'مثال — مجموعة د',
-                    discountText: 'وفر %15',
-                    selected: false,
-                    href: '#',
-                    imageUrl:
-                        'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png',
-                },
-            ],
-        },
-    };
+    // Get configuration from window object (set by store owner in dashboard)
+    const BUNDLES_BY_PRODUCT_ID = window.LUNEL_BUNDLES_CONFIG || {};
 
-    //Early exit — check product ID immediately
-    const productId = getProductIdFromURL();
-    if (!productId || !BUNDLES_BY_PRODUCT_ID[productId]) return;
+    // Early exit if no config exists
+    if (Object.keys(BUNDLES_BY_PRODUCT_ID).length === 0) {
+        console.warn(
+            'Lunel Bundles: No configuration found. Please set window.LUNEL_BUNDLES_CONFIG',
+        );
+        return;
+    }
 
-    // Cache bundles data once
-    const bundlesData = normalizeBundleSelection(
-        BUNDLES_BY_PRODUCT_ID[productId].bundles,
-    );
-    if (!bundlesData.length) return;
-
-    // Simplified product ID extraction
+    // Extract product ID from Salla URL
     function getProductIdFromURL() {
         const match = window.location.pathname.match(/\/p(\d+)/);
         return match ? match[1] : null;
     }
 
+    // Ensure at least one bundle is selected
     function normalizeBundleSelection(list) {
         if (!list || !list.length) return [];
         if (list.some((b) => b.selected)) return list;
-        list[0] = { ...list[0], selected: true };
+        if (list[0]) list[0] = { ...list[0], selected: true };
         return list;
     }
 
-    // Simplified anchor detection
+    // Find where to insert bundles in Salla's DOM
     function getInsertionPoint() {
         const form = document.querySelector(
             '#single-product-form, form.product-form',
         );
         if (!form) return null;
 
-        // Try fire icon row first, then price row
+        // Priority 1: Insert after fire icon (sold items counter)
         const fireIcon = form.querySelector('.sicon-fire');
         if (fireIcon) {
             const row = fireIcon.closest('.my-6');
             if (row) return row;
         }
 
+        // Priority 2: Insert after price element
         const priceEl = form.querySelector('.total-price-single');
         return priceEl?.closest('.flex.flex-wrap') || null;
     }
 
-    // Build HTML with template literal 
-    function buildBundlesHTML() {
+    // Build HTML for bundles cards
+    function buildBundlesHTML(bundlesData) {
         const cardsHTML = bundlesData
             .map(
                 (bundle) => `
@@ -124,17 +62,18 @@
                role="button"
                aria-pressed="${bundle.selected}"
                data-bundle-id="${bundle.id}">
-                <div class="lunel-bundles__badge">${bundle.discountText}</div>
+                <div class="lunel-bundles__badge">${escapeHtml(bundle.discountText)}</div>
                 <div class="lunel-bundles__media">
                     <img class="lunel-bundles__img"
-                         src="${bundle.imageUrl}"
-                         alt="${bundle.title}"
+                         src="${escapeHtml(bundle.imageUrl)}"
+                         alt="${escapeHtml(bundle.title)}"
                          width="112"
                          height="72"
                          decoding="async"
-                         loading="eager">
+                         loading="eager"
+                         onerror="this.src='https://placehold.co/112x72?text=No+Image'">
                 </div>
-                <div class="lunel-bundles__label">${bundle.title}</div>
+                <div class="lunel-bundles__label">${escapeHtml(bundle.title)}</div>
             </a>
         `,
             )
@@ -148,7 +87,18 @@
         `;
     }
 
-    // Simplified card selection with event delegation
+    // Simple XSS protection
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function (m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Handle card selection clicks
     function attachClickHandler() {
         const grid = document.querySelector(
             `#${LUNEL_BUNDLES_ROOT_ID} .lunel-bundles__grid`,
@@ -162,7 +112,6 @@
             e.preventDefault();
             const bundleId = card.dataset.bundleId;
 
-            // Update all cards in one pass
             grid.querySelectorAll('.lunel-bundles__card').forEach((el) => {
                 const isSelected = el.dataset.bundleId === bundleId;
                 el.classList.toggle(
@@ -171,26 +120,42 @@
                 );
                 el.setAttribute('aria-pressed', isSelected);
             });
+
+            // Optional: Trigger custom event for store owner to hook into
+            window.dispatchEvent(
+                new CustomEvent('lunelBundleSelected', {
+                    detail: { bundleId: bundleId },
+                }),
+            );
         });
     }
 
-    // Streamlined insertion logic
-    function insertBundles() {
+    // Insert bundles into the page
+    function insertBundles(bundlesData) {
         if (document.getElementById(LUNEL_BUNDLES_ROOT_ID)) return true;
 
         const anchor = getInsertionPoint();
         if (!anchor) return false;
 
-        anchor.insertAdjacentHTML('afterend', buildBundlesHTML());
+        anchor.insertAdjacentHTML('afterend', buildBundlesHTML(bundlesData));
         attachClickHandler();
         return true;
     }
 
-    // Smarter observer with debouncing 
+    // Main initialization
     function init() {
-        // Try immediate insertion
-        if (insertBundles()) return;
+        const productId = getProductIdFromURL();
+        if (!productId || !BUNDLES_BY_PRODUCT_ID[productId]) return;
 
+        const bundlesData = normalizeBundleSelection(
+            BUNDLES_BY_PRODUCT_ID[productId].bundles,
+        );
+        if (!bundlesData.length) return;
+
+        // Try immediate insertion
+        if (insertBundles(bundlesData)) return;
+
+        // Fallback: Watch for DOM changes (handles Salla's dynamic loading)
         const startTime = Date.now();
         let pending = false;
 
@@ -200,13 +165,11 @@
 
             requestAnimationFrame(() => {
                 pending = false;
-
                 if (Date.now() - startTime > WAIT_MAX_MS) {
                     observer.disconnect();
                     return;
                 }
-
-                if (insertBundles()) {
+                if (insertBundles(bundlesData)) {
                     observer.disconnect();
                 }
             });
@@ -215,11 +178,10 @@
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    // Optimal initialization timing 
+    // Start when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init, { once: true });
     } else {
-        // Use requestIdleCallback if available, otherwise setTimeout
         (window.requestIdleCallback || ((fn) => setTimeout(fn, 1)))(init);
     }
 })();

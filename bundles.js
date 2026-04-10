@@ -1,3 +1,5 @@
+// version 6.1.0
+
 (function () {
     'use strict';
 

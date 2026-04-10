@@ -123,7 +123,8 @@
                          height="72"
                          decoding="async"
                          loading="eager"
-                         data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}">
+                         data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}"
+                         onerror="this.src=${escapeHtml(bundle.imageFallbackUrl)} || 'https://placehold.co/112x72?text=No+Image'">
                 </div>
                 <div class="lunel-bundles__label">${escapeHtml(bundle.title)}</div>
             </a>
@@ -135,26 +136,6 @@
                 <div class="lunel-bundles__grid">${cardsHTML}</div>
             </section>
         `;
-    }
-
-    function attachImageFallbackHandlers() {
-        const root = document.getElementById(LUNEL_BUNDLES_ROOT_ID);
-        if (!root) return;
-        root.querySelectorAll('.lunel-bundles__img').forEach((img) => {
-            function onBundleImgError() {
-                if (img.getAttribute('data-lunel-fb-phase') !== '1') {
-                    const fb = img.getAttribute('data-lunel-img-fb');
-                    if (fb) {
-                        img.setAttribute('data-lunel-fb-phase', '1');
-                        img.src = fb;
-                        return;
-                    }
-                }
-                img.removeEventListener('error', onBundleImgError);
-                img.src = 'https://placehold.co/112x72?text=No+Image';
-            }
-            img.addEventListener('error', onBundleImgError);
-        });
     }
 
     function attachClickHandler() {
@@ -199,7 +180,6 @@
 
         const { element, position } = target;
         element.insertAdjacentHTML(position, buildBundlesHTML(bundlesData));
-        attachImageFallbackHandlers();
         attachClickHandler();
         console.log('Lunel Bundles: Successfully inserted bundles');
         return true;

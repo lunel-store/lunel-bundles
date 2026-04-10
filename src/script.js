@@ -15,24 +15,21 @@
             title: 'مجموعة التفتيح والنضارة',
             discountText: 'وفر %40',
             path: 'lunel-refund-return-guarantee-3x3/p1904366049',
-            imageUrl:
-                'https://cdn.salla.sa/PdPWWG/d26b4610-39c1-41ed-b485-097a77bd969b-1000x1000-eNNwLczaTo3BZWzaXOfetaklAglGGjAf227YqQKH.png'
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/45bac867-ef96-46ce-a384-6e756a30583c-1000x1000-rWPmls1QWgnfrr9ZiNJiAvpwrNIkkWEhXqEinVMc.png',
         },
         'bundle-2': {
             id: 'bundle-2',
             title: 'مجموعة لونيل المتكاملة',
             discountText: 'وفر %30',
             path: 'lunel-refund-return-guarantee-3x3/p2094249977',
-            imageUrl:
-                'https://cdn.jsdelivr.net/gh/ahmedalsanadi/salla-lunel-bundles@main/images/full-lunel-collection.png'
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/97a4430c-7c79-40b3-90d5-2ecd63944b86-1000x1000-aFE1QorPvoKTE4e2yKJkeU9k3E2pSP9t3hTAkDwO.png'
         },
         'bundle-3': {
             id: 'bundle-3',
             title: 'مجموعة الترطيب والعناية بالعين',
             discountText: 'وفر %25',
             path: 'lunel-refund-return-guarantee-3x3/p1644875761',
-            imageUrl:
-                'https://cdn.salla.sa/PdPWWG/81e639d9-6749-4ca6-bf8a-d9ab162c1e0c-1000x1000-CLxJzGdHfzX6jYJnUD35xxQuaKkY3Fj4l26pk5rz.png'
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/81e639d9-6749-4ca6-bf8a-d9ab162c1e0c-1000x1000-CLxJzGdHfzX6jYJnUD35xxQuaKkY3Fj4l26pk5rz.png'
         }
     };
 

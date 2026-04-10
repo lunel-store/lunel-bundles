@@ -115,7 +115,7 @@
     window.__lunelLoaderExecuted = true;
     
     // IMPORTANT: Increment this number EVERY TIME you change the config
-    const CONFIG_VERSION = '6.0.9';
+    const CONFIG_VERSION = '6.0.10';
     
     // Force fresh load from GitHub
     const SCRIPT_URL = 'https://cdn.jsdelivr.net/gh/lunel-store/salla-lunel-bundles@main/bundles.js?v=' + CONFIG_VERSION;

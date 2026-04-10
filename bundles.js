@@ -124,7 +124,7 @@
                          decoding="async"
                          loading="eager"
                          data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}"
-                         onerror="this.src=${escapeHtml(bundle.imageFallbackUrl)} || 'https://placehold.co/112x72?text=No+Image'">
+                         onerror="this.src=${escapeHtml(bundle.imageFallbackUrl)}">
                 </div>
                 <div class="lunel-bundles__label">${escapeHtml(bundle.title)}</div>
             </a>

@@ -123,7 +123,8 @@
                          height="72"
                          decoding="async"
                          loading="eager"
-                         data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}">
+                         data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}"
+                         data-lunel-img-fb-main="${escapeHtml(bundle.imageFallbackUrlMain || '')}">
                 </div>
                 <div class="lunel-bundles__label">${escapeHtml(bundle.title)}</div>
             </a>
@@ -142,13 +143,24 @@
         if (!root) return;
         root.querySelectorAll('.lunel-bundles__img').forEach((img) => {
             function onBundleImgError() {
-                if (img.getAttribute('data-lunel-fb-phase') !== '1') {
-                    const fb = img.getAttribute('data-lunel-img-fb');
-                    if (fb) {
-                        img.setAttribute('data-lunel-fb-phase', '1');
-                        img.src = fb;
+                const phase = img.getAttribute('data-lunel-fb-phase');
+                const tagUrl = img.getAttribute('data-lunel-img-fb');
+                const mainUrl = img.getAttribute('data-lunel-img-fb-main');
+                if (!phase) {
+                    if (tagUrl) {
+                        img.setAttribute('data-lunel-fb-phase', 'tag');
+                        img.src = tagUrl;
                         return;
                     }
+                    if (mainUrl) {
+                        img.setAttribute('data-lunel-fb-phase', 'main');
+                        img.src = mainUrl;
+                        return;
+                    }
+                } else if (phase === 'tag' && mainUrl) {
+                    img.setAttribute('data-lunel-fb-phase', 'main');
+                    img.src = mainUrl;
+                    return;
                 }
                 img.removeEventListener('error', onBundleImgError);
                 img.src = 'https://placehold.co/112x72?text=No+Image';

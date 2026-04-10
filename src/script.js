@@ -3,11 +3,22 @@
    Lunel Bundles - Configuration & Loader
    ============================================ */
 
+// Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
+var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.3';
+
 // ============================================
 // PART 1: CONFIGURATION (Edit this for your products)
 // ============================================
 (function () {
     'use strict';
+
+    var GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
+
+    function lunelJsdelivrImage(gitRef, fileName) {
+        var f = String(fileName || '').replace(/^\/+/, '');
+        if (!f) return '';
+        return 'https://cdn.jsdelivr.net/gh/' + GITHUB_REPO + '@' + gitRef + '/images/' + f;
+    }
 
     var CATALOG = {
         'bundle-1': {
@@ -16,7 +27,7 @@
             discountText: 'وفر %40',
             path: 'lunel-refund-return-guarantee-3x3/p1904366049',
             imageUrl: 'https://cdn.salla.sa/PdPWWG/45bac867-ef96-46ce-a384-6e756a30583c-1000x1000-rWPmls1QWgnfrr9ZiNJiAvpwrNIkkWEhXqEinVMc.png',
-            imageFallbackUrl: 'https://cdn.jsdelivr.net/gh/lunel-store/salla-lunel-bundles@main/images/p1904366049.webp'
+            imageFallbackFile: 'p1904366049.webp'
         },
         'bundle-2': {
             id: 'bundle-2',
@@ -24,7 +35,7 @@
             discountText: 'وفر %30',
             path: 'lunel-refund-return-guarantee-3x3/p2094249977',
             imageUrl: 'https://cdn.salla.sa/PdPWWG/97a4430c-7c79-40b3-90d5-2ecd63944b86-1000x1000-aFE1QorPvoKTE4e2yKJkeU9k3E2pSP9t3hTAkDwO.png',
-            imageFallbackUrl: 'https://cdn.jsdelivr.net/gh/lunel-store/salla-lunel-bundles@main/images/p2094249977.webp'
+            imageFallbackFile: 'p2094249977.webp'
         },
         'bundle-3': {
             id: 'bundle-3',
@@ -32,7 +43,7 @@
             discountText: 'وفر %25',
             path: 'lunel-refund-return-guarantee-3x3/p1644875761',
             imageUrl: 'https://cdn.salla.sa/PdPWWG/81e639d9-6749-4ca6-bf8a-d9ab162c1e0c-1000x1000-CLxJzGdHfzX6jYJnUD35xxQuaKkY3Fj4l26pk5rz.png',
-            imageFallbackUrl: 'https://cdn.jsdelivr.net/gh/lunel-store/salla-lunel-bundles@main/images/p1644875761.webp'
+            imageFallbackFile: 'p1644875761.webp'
         }
     };
 
@@ -87,6 +98,10 @@
                         console.warn('Lunel Bundles: missing catalog entry for', bundleId);
                         return null;
                     }
+                    var tagRef = 'v' + LUNEL_BUNDLES_CONFIG_VERSION;
+                    var file = base.imageFallbackFile;
+                    var fbTag = file ? lunelJsdelivrImage(tagRef, file) : '';
+                    var fbMain = file ? lunelJsdelivrImage('main', file) : '';
                     return {
                         id: base.id,
                         title: base.title,
@@ -94,7 +109,8 @@
                         path: base.path,
                         href: productHrefFromPath(base.path),
                         imageUrl: base.imageUrl,
-                        imageFallbackUrl: base.imageFallbackUrl,
+                        imageFallbackUrl: fbTag,
+                        imageFallbackUrlMain: fbMain,
                         selected: bundleId === def.selected
                     };
                 })
@@ -114,21 +130,49 @@
     if (window.__lunelLoaderExecuted) return;
     window.__lunelLoaderExecuted = true;
     
-    // IMPORTANT: Increment this number EVERY TIME you change the config
-    const CONFIG_VERSION = '6.1.1';
-    
-    // Force fresh load from GitHub
-    const SCRIPT_URL = 'https://cdn.jsdelivr.net/gh/lunel-store/salla-lunel-bundles@v' + CONFIG_VERSION + '/bundles.js?v=' + CONFIG_VERSION;
-    
-    // Load the script
-    const script = document.createElement('script');
-    script.src = SCRIPT_URL;
-    script.defer = true;
-    script.onload = function() {
-        console.log('✅ Lunel Bundles: Loaded successfully (v' + CONFIG_VERSION + ')');
-    };
-    script.onerror = function() {
-        console.error('❌ Lunel Bundles: Failed to load. Check GitHub file URL.');
-    };
-    document.head.appendChild(script);
+    const CONFIG_VERSION = LUNEL_BUNDLES_CONFIG_VERSION;
+    const GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
+
+    function sanitizeGitRef(ref) {
+        return String(ref || '')
+            .trim()
+            .replace(/^@+/, '')
+            .replace(/[^a-zA-Z0-9._/-]/g, '');
+    }
+
+    function bundlesJsUrl(ref) {
+        return (
+            'https://cdn.jsdelivr.net/gh/' +
+            GITHUB_REPO +
+            '@' +
+            ref +
+            '/bundles.js?v=' +
+            encodeURIComponent(CONFIG_VERSION)
+        );
+    }
+
+    function loadBundlesJs(ref, allowMainFallback) {
+        const script = document.createElement('script');
+        script.src = bundlesJsUrl(ref);
+        script.defer = true;
+        script.onload = function () {
+            console.log('✅ Lunel Bundles: Loaded successfully (v' + CONFIG_VERSION + ', ref ' + ref + ')');
+        };
+        script.onerror = function () {
+            if (allowMainFallback && ref !== 'main') {
+                console.warn('Lunel Bundles: ref "' + ref + '" failed, retrying @main');
+                loadBundlesJs('main', false);
+                return;
+            }
+            console.error('❌ Lunel Bundles: Failed to load. Check GitHub file URL.');
+        };
+        document.head.appendChild(script);
+    }
+
+    const explicit = sanitizeGitRef(window.LUNEL_BUNDLES_JS_REF);
+    if (explicit) {
+        loadBundlesJs(explicit, false);
+    } else {
+        loadBundlesJs('v' + CONFIG_VERSION, true);
+    }
 })();

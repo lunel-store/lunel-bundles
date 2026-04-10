@@ -1,9 +1,14 @@
-/**
- * Demo/local: builds window.LUNEL_BUNDLES_CONFIG (same logic as src/script.js PART 1).
- * Keeps LUNEL_BUNDLES_CONFIG_VERSION in sync with src/script.js when testing.
- */
-var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.6';
+/* Add custom Js styles below */ 
+/* ============================================
+   Lunel Bundles - Configuration & Loader
+   ============================================ */
 
+// Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
+var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.7';
+
+// ============================================
+// PART 1: CONFIGURATION (Edit this for your products)
+// ============================================
 (function () {
     'use strict';
 
@@ -21,8 +26,7 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.6';
             title: 'مجموعة التفتيح والنضارة',
             discountText: 'وفر %40',
             path: 'lunel-refund-return-guarantee-3x3/p1904366049',
-            imageUrl:
-                'https://cdn.salla.sa/PdPWWG/45bac867-ef96-46ce-a384-6e756a30583c-1000x1000-rWPmls1QWgnfrr9ZiNJiAvpwrNIkkWEhXqEinVMc.png',
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/45bac867-ef96-46ce-a384-6e756a30583c-1000x1000-rWPmls1QWgnfrr9ZiNJiAvpwrNIkkWEhXqEinVMc.png',
             imageFallbackFile: 'p1904366049.webp',
             topRibbon: { text: 'لأفضل نتائج', tone: 'green', seal: true }
         },
@@ -31,20 +35,17 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.6';
             title: 'مجموعة لونيل المتكاملة',
             discountText: 'وفر %30',
             path: 'lunel-refund-return-guarantee-3x3/p2094249977',
-            imageUrl:
-                'https://cdn.salla.sa/PdPWWG/97a4430c-7c79-40b3-90d5-2ecd63944b86-1000x1000-aFE1QorPvoKTE4e2yKJkeU9k3E2pSP9t3hTAkDwO.png',
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/97a4430c-7c79-40b3-90d5-2ecd63944b86-1000x1000-aFE1QorPvoKTE4e2yKJkeU9k3E2pSP9t3hTAkDwO.png',
             imageFallbackFile: 'p2094249977.webp',
             topRibbon: { text: 'الأكثر مبيعاً', tone: 'orange', seal: true },
-            topRibbon2: { text: 'ينفد خلال أيام', tone: 'red', flame: true },
-            tagline: 'الروتين المتكامل للتفتيح والنضارة'
+            topRibbon2: { text: 'ينفد خلال أيام', tone: 'red', flame: true }
         },
         'bundle-3': {
             id: 'bundle-3',
             title: 'مجموعة الترطيب والعناية بالعين',
             discountText: 'وفر %25',
             path: 'lunel-refund-return-guarantee-3x3/p1644875761',
-            imageUrl:
-                'https://cdn.salla.sa/PdPWWG/81e639d9-6749-4ca6-bf8a-d9ab162c1e0c-1000x1000-CLxJzGdHfzX6jYJnUD35xxQuaKkY3Fj4l26pk5rz.png',
+            imageUrl: 'https://cdn.salla.sa/PdPWWG/81e639d9-6749-4ca6-bf8a-d9ab162c1e0c-1000x1000-CLxJzGdHfzX6jYJnUD35xxQuaKkY3Fj4l26pk5rz.png',
             imageFallbackFile: 'p1644875761.webp',
             topRibbon: { text: 'لأفضل نتائج', tone: 'green', seal: true }
         }
@@ -116,7 +117,6 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.6';
                         imageFallbackUrlMain: fbMain,
                         topRibbon: base.topRibbon,
                         topRibbon2: base.topRibbon2,
-                        tagline: base.tagline,
                         selected: bundleId === def.selected
                     };
                 })
@@ -124,4 +124,61 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.6';
         };
     }
     window.LUNEL_BUNDLES_CONFIG = out;
+})();
+
+// ============================================
+// PART 2: CACHE-BUSTING LOADER
+// ============================================
+(function() {
+    'use strict';
+    
+    // Prevent loading twice
+    if (window.__lunelLoaderExecuted) return;
+    window.__lunelLoaderExecuted = true;
+    
+    const CONFIG_VERSION = LUNEL_BUNDLES_CONFIG_VERSION;
+    const GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
+
+    function sanitizeGitRef(ref) {
+        return String(ref || '')
+            .trim()
+            .replace(/^@+/, '')
+            .replace(/[^a-zA-Z0-9._/-]/g, '');
+    }
+
+    function bundlesJsUrl(ref) {
+        return (
+            'https://cdn.jsdelivr.net/gh/' +
+            GITHUB_REPO +
+            '@' +
+            ref +
+            '/bundles.js?v=' +
+            encodeURIComponent(CONFIG_VERSION)
+        );
+    }
+
+    function loadBundlesJs(ref, allowMainFallback) {
+        const script = document.createElement('script');
+        script.src = bundlesJsUrl(ref);
+        script.defer = true;
+        script.onload = function () {
+            console.log('✅ Lunel Bundles: Loaded successfully (v' + CONFIG_VERSION + ', ref ' + ref + ')');
+        };
+        script.onerror = function () {
+            if (allowMainFallback && ref !== 'main') {
+                console.warn('Lunel Bundles: ref "' + ref + '" failed, retrying @main');
+                loadBundlesJs('main', false);
+                return;
+            }
+            console.error('❌ Lunel Bundles: Failed to load. Check GitHub file URL.');
+        };
+        document.head.appendChild(script);
+    }
+
+    const explicit = sanitizeGitRef(window.LUNEL_BUNDLES_JS_REF);
+    if (explicit) {
+        loadBundlesJs(explicit, false);
+    } else {
+        loadBundlesJs('v' + CONFIG_VERSION, true);
+    }
 })();

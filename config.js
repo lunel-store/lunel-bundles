@@ -4,7 +4,7 @@
    ============================================ */
 
 // Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
-var LUNEL_BUNDLES_CONFIG_VERSION = '6.2.0';
+var LUNEL_BUNDLES_CONFIG_VERSION = '6.2.1';
 
 // ============================================
 // PART 1: CONFIGURATION (Edit this for your products)
@@ -13,11 +13,12 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.2.0';
     'use strict';
 
     var GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
+    var JSDELIVR_PREFIX = 'https://cdn.jsdelivr.net/gh/' + GITHUB_REPO + '@' + 'v' + LUNEL_BUNDLES_CONFIG_VERSION;
 
     function lunelJsdelivrImage(gitRef, fileName) {
         var f = String(fileName || '').replace(/^\/+/, '');
         if (!f) return '';
-        return 'https://cdn.jsdelivr.net/gh/' + GITHUB_REPO + '@' + gitRef + '/images/' + f;
+        return JSDELIVR_PREFIX + '/images/' + f;
     }
 
     var CATALOG = {
@@ -105,7 +106,6 @@ var LUNEL_BUNDLES_CONFIG_VERSION = '6.2.0';
                     var tagRef = 'v' + LUNEL_BUNDLES_CONFIG_VERSION;
                     var file = base.imageFallbackFile;
                     var fbTag = file ? lunelJsdelivrImage(tagRef, file) : '';
-                    var fbMain = file ? lunelJsdelivrImage('main', file) : '';
                     return {
                         id: base.id,
                         title: base.title,

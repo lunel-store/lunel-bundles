@@ -197,9 +197,9 @@ var LUNEL_LOCAL_ENV = false;
 (function () {
   'use strict';
 
-  // Prevent loading twice
-  if (window.__lunelLoaderExecuted) return;
-  window.__lunelLoaderExecuted = true;
+  // Prevent duplicate bundles.js injection (do not reuse __lunelLoaderExecuted — external bootstraps may set that before config runs).
+  if (window.__lunelBundlesJsLoaderExecuted) return;
+  window.__lunelBundlesJsLoaderExecuted = true;
 
   function sanitizeGitRef(ref) {
     return String(ref || '')

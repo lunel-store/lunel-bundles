@@ -112,38 +112,46 @@
         const tone = /^(orange|green|red)$/.test(ribbon.tone) ? ribbon.tone : 'green';
         const seal = ribbon.seal === true;
         const flame = ribbon.flame === true;
-        let html =
-            '<span class="lunel-bundles__ribbon lunel-bundles__ribbon--' +
-            tone +
-            '"><span class="lunel-bundles__ribbon-label">' +
-            escapeHtml(ribbon.text) +
-            '</span>';
+        let inner = '';
         if (seal) {
-            html +=
+            inner +=
                 '<span class="lunel-bundles__ribbon-seal" aria-hidden="true"><span class="lunel-bundles__ribbon-seal-inner">#1</span></span>';
         }
         if (flame) {
-            html +=
-                '<span class="lunel-bundles__ribbon-flame" aria-hidden="true">\uD83D\uDD25</span>';
+            inner += '<span class="lunel-bundles__ribbon-flame" aria-hidden="true">\uD83D\uDD25</span>';
         }
-        html += '</span>';
-        return html;
+        inner +=
+            '<span class="lunel-bundles__ribbon-label">' + escapeHtml(ribbon.text) + '</span>';
+        return (
+            '<span class="lunel-bundles__ribbon lunel-bundles__ribbon--' + tone + '">' + inner + '</span>'
+        );
     }
 
-    function buildRibbonsBlock(bundle) {
+    function buildRibbonsBlock(bundle, cardCount) {
         const parts = [];
         const a = buildRibbonSpan(bundle.topRibbon);
-        const b = buildRibbonSpan(bundle.topRibbon2);
         if (a) parts.push(a);
-        if (b) parts.push(b);
+        if (cardCount < 3 && bundle.topRibbon2) {
+            const b = buildRibbonSpan(bundle.topRibbon2);
+            if (b) parts.push(b);
+        }
         if (!parts.length) return '';
         const multi = parts.length > 1 ? ' lunel-bundles__ribbons--multi' : '';
-        return '<div class="lunel-bundles__ribbons' + multi + '" aria-hidden="true">' + parts.join('') + '</div>';
+        return (
+            '<div class="lunel-bundles__ribbons' +
+            multi +
+            '" aria-hidden="true">' +
+            parts.join('') +
+            '</div>'
+        );
     }
 
-    function buildBundlesHTML(bundlesData) {
+    function buildBundlesHTML(bundlesData, inlinePlacement) {
+        const sectionClass =
+            inlinePlacement === true ? 'lunel-bundles' : 'lunel-bundles lunel-bundles--overlay';
+        const nCards = bundlesData.length;
         const cardsHTML = bundlesData.map((bundle) => {
-            const ribbons = buildRibbonsBlock(bundle);
+            const ribbons = buildRibbonsBlock(bundle, nCards);
             const hasRibbons = ribbons ? ' lunel-bundles__card--has-ribbons' : '';
             return `
             <a class="lunel-bundles__card${bundle.selected ? ' lunel-bundles__card--selected' : ''}${hasRibbons}"
@@ -164,16 +172,16 @@
                              data-lunel-img-fb="${escapeHtml(bundle.imageFallbackUrl || '')}"
                              data-lunel-img-fb-main="${escapeHtml(bundle.imageFallbackUrlMain || '')}">
                     </div>
-                    <div class="lunel-bundles__label">${escapeHtml(bundle.title)}</div>
+                    <div class="lunel-bundles__label" dir="rtl">${escapeHtml(bundle.title)}</div>
                 </div>
                 <div class="lunel-bundles__discount">${escapeHtml(bundle.discountText)}</div>
             </a>`;
         }).join('');
 
         return `
-            <section id="${LUNEL_BUNDLES_ROOT_ID}" class="lunel-bundles" dir="rtl">
-                <h3 class="lunel-bundles__heading">المجموعات</h3>
-                <div class="lunel-bundles__grid">${cardsHTML}</div>
+            <section id="${LUNEL_BUNDLES_ROOT_ID}" class="${sectionClass}" lang="ar">
+                <h3 class="lunel-bundles__heading" dir="rtl">المجموعات</h3>
+                <div class="lunel-bundles__grid" dir="rtl">${cardsHTML}</div>
             </section>
         `;
     }
@@ -246,11 +254,18 @@
             return true;
         }
 
-        const target = getInsertionPoint();
-        if (!target) return false;
+        const inlinePlacement = window.LUNEL_BUNDLES_INLINE_PLACEMENT === true;
+        const html = buildBundlesHTML(bundlesData, inlinePlacement);
 
-        const { element, position } = target;
-        element.insertAdjacentHTML(position, buildBundlesHTML(bundlesData));
+        if (inlinePlacement) {
+            const target = getInsertionPoint();
+            if (!target) return false;
+            target.element.insertAdjacentHTML(target.position, html);
+        } else {
+            if (!document.body) return false;
+            document.body.insertAdjacentHTML('beforeend', html);
+        }
+
         attachImageFallbackHandlers();
         attachClickHandler();
         console.log('Lunel Bundles: Successfully inserted bundles');

@@ -4,7 +4,7 @@
    ============================================ */
 
 // Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
-var LUNEL_BUNDLES_CONFIG_VERSION = '6.1.7';
+var LUNEL_BUNDLES_CONFIG_VERSION = '6.2.0';
 
 // ============================================
 // PART 1: CONFIGURATION (Edit this for your products)

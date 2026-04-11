@@ -235,5 +235,12 @@
   #lunel-bundles-root .lunel-bundles__label {
     font-size: 16px;
   }
+
+  /* Only one top bar is created on small screens (two bars are created when there are fewer than 3 cards) */
+  #lunel-bundles-root
+    .lunel-bundles__top_badges
+    .lunel-bundles__top_badge_item:nth-child(n + 2) {
+    display: none;
+  }
 }
 /*=========== Lunel — product bundles End ======================================= */

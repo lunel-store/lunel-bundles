@@ -313,53 +313,43 @@ function createCloseButton(className, callback) {
     const applyBadges = () => {
       // نأخذ كل .product-entry للحماية من الاختلافات (لو صفحة تستخدم بنية مختلفة)
       document.querySelectorAll('.product-entry').forEach(entry => {
-        // اجلب عناصر السعر والصورة
-        const priceEl = entry.querySelector('.product-entry__price');
         const imageEl = entry.querySelector('.product-entry__image');
-  
-        if (!priceEl || !imageEl) return;
-  
-        // نبحث عن sale & regular داخل الـ price
-        const salePriceEl = priceEl.querySelector('.sale-price');
-        const regularPriceEl = priceEl.querySelector('.regular-price');
-  
-        // إذا لم توجد قيم الأسعار، نحاول جلبها من data attributes أو نصوص بديلة
+        if (!imageEl) return;
+
+        // حاوية السعر: أحيانًا يكون السعر داخل .product-entry__price، وأحيانًا (مثل بعض حالات نفاد الكمية) داخل .price-wrapper فقط
+        let priceEl = entry.querySelector('.product-entry__price');
+        if (!priceEl) {
+          priceEl = entry.querySelector('.price-wrapper');
+        }
+        if (!priceEl) return;
+
+        let salePriceEl = priceEl.querySelector('.sale-price');
+        let regularPriceEl = priceEl.querySelector('.regular-price');
+
         if (!salePriceEl || !regularPriceEl) {
-          // محاولة fallback: عناصر قد تكون بصيغة أخرى
           const sp = priceEl.querySelector('[data-sale-price]') || priceEl.querySelector('.price--sale');
           const rp = priceEl.querySelector('[data-regular-price]') || priceEl.querySelector('.price--regular');
           if (sp && rp) {
-            // تعيين مؤقت للمتغيرات لكي يُعامل برمجياً
-            // لكن نستعمل النص لاحقًا كما في الأسفل
-          } else {
-            return; // لا توجد معلومات كافية للأسعار → تجاهل
+            salePriceEl = sp;
+            regularPriceEl = rp;
           }
         }
-  
-        // استخراج الأرقام بشكل آمن
-        const parsePrice = (el) => {
+
+        const parsePrice = el => {
           if (!el) return NaN;
           const txt = el.dataset?.price || el.textContent || '';
           const num = parseFloat(txt.replace(/[^\d.,\-]/g, '').replace(',', '.'));
           return Number.isFinite(num) ? num : NaN;
         };
-  
+
         const salePrice = parsePrice(salePriceEl);
         const regularPrice = parsePrice(regularPriceEl);
-  
-        if (!Number.isFinite(salePrice) || !Number.isFinite(regularPrice)) return;
-        if (regularPrice <= salePrice) {
-          // لا يوجد خصم
-          // لكن نتأكد من إزالة شارة خصم قديمة إن وُجدت لتجنب التكرار
-          if (imageEl.querySelector('.discount-badge') && !entry.closest('.featured_product_larg')) {
-            // نتركها — عادة لن يحدث
-          }
-          return;
-        }
-  
-        const discountPercent = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
-  
-        // ===== إنشاء شارة الخصم كعنصر قابل لإعادة الاستخدام =====
+        const hasDiscount =
+          Number.isFinite(salePrice) && Number.isFinite(regularPrice) && regularPrice > salePrice;
+        const discountPercent = hasDiscount
+          ? Math.round(((regularPrice - salePrice) / regularPrice) * 100)
+          : 0;
+
         const createDiscountBadge = () => {
           const badge = document.createElement('span');
           badge.className = 'discount-badge';
@@ -374,11 +364,44 @@ function createCloseButton(className, callback) {
           `;
           return badge;
         };
-  
-        const isFeatured = !!entry.closest('.featured_product_larg') || !!entry.closest('.Special-offer-product');
-  
+
+        const syncPurchaseCount = extra => {
+          const baseCount = 30800;
+          const incrementPerDay = 48;
+          const startDate = new Date('2026-01-01');
+          const currentCount = getDynamicPurchaseCount(baseCount, incrementPerDay, startDate);
+          const text = `تم شراءه ${currentCount.toLocaleString()} مرة`;
+          let pc = extra.querySelector('.purchase-count');
+          if (!pc) {
+            pc = document.createElement('span');
+            pc.className = 'purchase-count';
+            pc.style.cssText = `
+              display: inline-block;
+              background: #f9f9f9;
+              border: 1px solid #e1ded9;
+              padding: 3px 10px;
+              border-radius: 8px;
+              color: #2fb43e;
+              font-size: 14px;
+              white-space:nowrap;
+            `;
+            extra.appendChild(pc);
+          }
+          pc.textContent = text;
+        };
+
+        const isFeatured =
+          !!entry.closest('.featured_product_larg') || !!entry.closest('.Special-offer-product');
+
         if (isFeatured) {
-          // ===== داخل featured_product_larg: نجمع الشارتين داخل .price-extra في priceEl =====
+          if (priceEl.matches('.price-wrapper') && !priceEl.dataset.priceExtraLayout) {
+            priceEl.dataset.priceExtraLayout = '1';
+            priceEl.style.display = 'flex';
+            priceEl.style.flexDirection = 'column';
+            priceEl.style.alignItems = 'center';
+            priceEl.style.gap = '8px';
+          }
+
           let extra = priceEl.querySelector('.price-extra');
           if (!extra) {
             extra = document.createElement('div');
@@ -395,58 +418,36 @@ function createCloseButton(className, callback) {
             `;
             priceEl.appendChild(extra);
           }
-  
-          // شارة الخصم — أضف إذا لم توجد
-          if (!extra.querySelector('.discount-badge')) {
+
+          extra.querySelectorAll('.discount-badge').forEach(n => n.remove());
+
+          if (hasDiscount) {
             extra.insertAdjacentElement('afterbegin', createDiscountBadge());
-          } else {
-            // حدّث النص لو تغيرت النسبة
-            const existing = extra.querySelector('.discount-badge');
-            if (existing && existing.textContent && existing.textContent.indexOf('%') === -1) {
-              existing.textContent = `وفّري ${discountPercent}%`;
-            } else if (existing) {
-              existing.textContent = `وفّري ${discountPercent}%`;
+          }
+
+          syncPurchaseCount(extra);
+
+          // ترتيب: شارة الخصم ← صف الأسعار (السعر قبل الخصم ثم سعر البيع) ← عداد المشتريات — والعنوان الفرعي يظل تحت العنوان في .text-info
+          if (hasDiscount) {
+            const badge = priceEl.querySelector('.discount-badge');
+            const saleNode = priceEl.querySelector('.sale-price');
+            const regNode = priceEl.querySelector('.regular-price');
+            if (badge && saleNode && regNode) {
+              const row = saleNode.parentElement;
+              if (row && row !== extra && row.contains(regNode) && row.parentElement === priceEl) {
+                priceEl.insertBefore(badge, row);
+                row.insertBefore(regNode, saleNode);
+                if (extra && row.nextSibling !== extra) {
+                  priceEl.insertBefore(extra, row.nextSibling);
+                }
+              } else if (row && row !== extra && row.contains(regNode)) {
+                row.insertBefore(regNode, saleNode);
+              }
             }
           }
-  
-          // عداد المشتريات — أضف إذا لم يوجد
-          if (!extra.querySelector('.purchase-count')) {
-            const baseCount = 30800;
-            const incrementPerDay = 48;
-            const startDate = new Date('2026-01-01');
-            const currentCount = getDynamicPurchaseCount(baseCount, incrementPerDay, startDate);
-  
-            const purchaseCount = document.createElement('span');
-            purchaseCount.className = 'purchase-count';
-            purchaseCount.textContent = `تم شراءه ${currentCount.toLocaleString()} مرة`;
-            purchaseCount.style.cssText = `
-              display: inline-block;
-              background: #f9f9f9;
-              border: 1px solid #e1ded9;
-              padding: 3px 10px;
-              border-radius: 8px;
-              color: #2fb43e;
-              font-size: 14px;
-              white-space:nowrap;
-            `;
-            extra.appendChild(purchaseCount);
-          } else {
-            // لو موجود حدّث العدد (مفيد لو السكريبت يعاد تشغيله)
-            const pc = extra.querySelector('.purchase-count');
-            if (pc) {
-              const baseCount = 30800;
-              const incrementPerDay = 48;
-              const startDate = new Date('2026-01-01');
-              const currentCount = getDynamicPurchaseCount(baseCount, incrementPerDay, startDate);
-              pc.textContent = `تم شراءه ${currentCount.toLocaleString()} مرة`;
-            }
-          }
-        } else {
-          // ===== لباقي المنتجات: شارة الخصم فقط داخل الصورة (.product-entry__image) =====
-          // نضعها في ركن الصورة، مع حماية من التكرار
+        } else if (hasDiscount) {
           if (!imageEl.querySelector('.discount-badge')) {
             const badge = createDiscountBadge();
-            // نعطيها موقع كـ absolute داخل الصورة
             imageEl.style.position = imageEl.style.position || 'relative';
             badge.style.cssText += `
               position:absolute;
@@ -460,10 +461,11 @@ function createCloseButton(className, callback) {
             `;
             imageEl.appendChild(badge);
           } else {
-            // لو موجود حدّث النص فقط
             const existing = imageEl.querySelector('.discount-badge');
             if (existing) existing.textContent = `وفّري ${discountPercent}%`;
           }
+        } else {
+          imageEl.querySelectorAll('.discount-badge').forEach(n => n.remove());
         }
       });
     };
@@ -560,37 +562,36 @@ function createCloseButton(className, callback) {
       });
     };
 
-    // ===== نسخ العناوين الفرعية لبطاقات العرض الخاص =====
+    // ===== نسخ العناوين الفرعية لبطاقات العرض الخاص + البلوك المميز الكبير =====
     const enhanceSpecialOfferCards = () => {
-      const section = document.querySelector('.Special-offer-product');
-      if (!section) return;
+      const syncSubtitles = section => {
+        const subtitleMap = {};
+        section.querySelectorAll('custom-salla-product-card').forEach(card => {
+          const pid = card.getAttribute('data-product-id') || card.id;
+          const sub = card.querySelector('.product-entry__subtitle');
+          if (sub && pid) subtitleMap[pid] = sub.textContent.trim();
+        });
 
-      // جمع العناوين الفرعية من البطاقات التي تحتوي عليها
-      const subtitleMap = {};
-      section.querySelectorAll('custom-salla-product-card').forEach(card => {
-        const pid = card.getAttribute('data-product-id') || card.id;
-        const sub = card.querySelector('.product-entry__subtitle');
-        if (sub && pid) subtitleMap[pid] = sub.textContent.trim();
+        section.querySelectorAll('custom-salla-product-card').forEach(card => {
+          const pid = card.getAttribute('data-product-id') || card.id;
+          const textInfo = card.querySelector('.text-info');
+          if (!textInfo || card.querySelector('.product-entry__subtitle')) return;
+          if (!subtitleMap[pid]) return;
+
+          const p = document.createElement('p');
+          p.className = 'product-entry__subtitle text-xs text-[var(--product-subtitle-color)]';
+          p.textContent = subtitleMap[pid];
+          const title = textInfo.querySelector('.product-entry__title');
+          if (title) title.insertAdjacentElement('afterend', p);
+        });
+      };
+
+      document.querySelectorAll('.Special-offer-product, .featured_product_larg').forEach(section => {
+        syncSubtitles(section);
       });
 
-      // إضافة العنوان الفرعي للبطاقات التي لا تحتوي عليه
-      section.querySelectorAll('custom-salla-product-card').forEach(card => {
-        const pid = card.getAttribute('data-product-id') || card.id;
-        const textInfo = card.querySelector('.text-info');
-        if (!textInfo || card.querySelector('.product-entry__subtitle')) return;
-        if (!subtitleMap[pid]) return;
-
-        const p = document.createElement('p');
-        p.className = 'product-entry__subtitle text-xs';
-        p.style.color = 'var(--product-subtitle-color)';
-        p.textContent = subtitleMap[pid];
-        const title = textInfo.querySelector('.product-entry__title');
-        if (title) title.insertAdjacentElement('afterend', p);
-      });
-
-      // تحويل زر الأيقونة إلى زر نصي (مطابقة للبطاقة المميزة)
       const addText = isRTL ? 'إضافة' : 'Add';
-      section.querySelectorAll('.product-entry--horizontal .product_addCart_mini').forEach(mini => {
+      document.querySelectorAll('.Special-offer-product .product-entry--horizontal .product_addCart_mini').forEach(mini => {
         if (mini.dataset.textified) return;
 
         const btn = mini.querySelector('button');

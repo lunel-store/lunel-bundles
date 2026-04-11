@@ -1,10 +1,12 @@
 (function () {
   'use strict';
 
-  var LUNEL_BUNDLES_CONFIG_VERSION = '7.0.5';
+  var LUNEL_BUNDLES_CONFIG_VERSION = '7.0.6';
   var LUNEL_GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
   var JSDELIVR_PREFIX =
     'https://cdn.jsdelivr.net/gh/' + LUNEL_GITHUB_REPO + '@';
+  var JSDELIVR_TAG_PREFIX =
+    JSDELIVR_PREFIX + 'v' + LUNEL_BUNDLES_CONFIG_VERSION;
 
   // Only this bootstrap; must NOT set __lunelBundlesJsLoaderExecuted (config.js Part 2 owns that and loads bundles.js).
   if (window.__lunelConfigBootstrapExecuted) return;
@@ -52,11 +54,34 @@
   function loadStyle() {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href =
-      JSDELIVR_PREFIX + 'v' + LUNEL_BUNDLES_CONFIG_VERSION + '/style.css';
+    link.href = JSDELIVR_TAG_PREFIX + '/style.css';
     document.head.appendChild(link);
   }
 
+  function loadOriginalScript() {
+    const script = document.createElement('script');
+    script.src = JSDELIVR_TAG_PREFIX + '/original/script.js';
+    script.defer = true;
+    script.onload = function () {
+      console.log('✅ Lunel Bundles: Original script loaded');
+    };
+    script.onerror = function () {
+      console.error(
+        '❌ Lunel Bundles: Failed to load original script. Check GitHub / jsDelivr URL.',
+      );
+    };
+    document.head.appendChild(script);
+  }
+
+  function loadOriginalStyle() {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = JSDELIVR_TAG_PREFIX + '/original/style.css';
+    document.head.appendChild(link);
+  }
+
+  loadOriginalScript();
+  loadOriginalStyle();
   loadLunelConfig('v' + LUNEL_BUNDLES_CONFIG_VERSION, true);
   loadStyle();
 })();

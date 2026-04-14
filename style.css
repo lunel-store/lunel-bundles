@@ -1,8 +1,6 @@
 /* Add custom CSS styles below */
 
-/*====== Lunel — product bundles Start =======================================
- * Lunel — product bundles (scoped under #lunel-bundles-root) product details page.
- */
+/*====== Lunel — product bundles (aligned with demo/newcard.html) ============*/
 
 #lunel-bundles-root.lunel-bundles {
   margin: 22px 0 16px;
@@ -19,52 +17,53 @@
 }
 
 #lunel-bundles-root .lunel-bundles__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-#lunel-bundles-root .lunel-bundles__grid.three-columns {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 #lunel-bundles-root .lunel-bundles__card {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 18px 14px 16px;
-  border-radius: 14px;
-  background: #f9f9f9;
+  padding: 12px 15px;
+  border-radius: 12px;
   border: 2px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.3s;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 450px;
   -webkit-tap-highlight-color: transparent;
 }
 
 #lunel-bundles-root .lunel-bundles__card--selected {
-  border-color: #111;
+  border: 2px solid #111;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+  background: #f8f4f4;
 }
 
-/* ============== top_badges ============== */
 #lunel-bundles-root .lunel-bundles__top_badges {
   position: absolute;
-  top: -12px;
-  inset-inline-start: 50%;
-  transform: translateX(50%);
-
-  display: flex;
+  top: -10px;
+  left: 40%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  z-index: 10;
   gap: 4px;
   flex-wrap: nowrap;
-
-  color: white;
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 1.1;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item {
@@ -72,28 +71,27 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  padding: 1px 10px;
+  padding: 3px 12px;
   border-radius: 15px;
-  background: #ffeb3b;
+  white-space: nowrap;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-
-  white-space: nowrap; /* 👈 prevents text wrapping */
+  font-size: 14px;
+  line-height: 1.1;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item.orange-badge {
-  background: #f24821 !important;
+  background: #ff4d24 !important;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item.green-badge {
   background: #26b33d !important;
 }
 
-/* 10-scallop white disk: same shell for seal (#1) and flame (emoji) */
+/* Seal + flame disks (from demo/newcard.html) */
 #lunel-bundles-root .lunel-bundles__top_badge_item .badge,
 #lunel-bundles-root
   .lunel-bundles__top_badge_item
   .lunel-bundles__top_badge_flame {
-  /* 10 scallops: cubic Beziers (smooth), ro/ri close + short handles = rounded lobes */
   --lunel-scallop-mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M50.00%2C6.00%20C61.50%2C6.00%2050.81%2C10.31%2061.74%2C13.86%20C72.68%2C17.41%2066.56%2C7.64%2075.86%2C14.40%20C85.17%2C21.16%2073.98%2C18.36%2080.74%2C27.66%20C87.50%2C36.97%2088.29%2C25.47%2091.85%2C36.40%20C95.40%2C47.34%2088.00%2C38.50%2088.00%2C50.00%20C88.00%2C61.50%2095.40%2C52.66%2091.85%2C63.60%20C88.29%2C74.53%2087.50%2C63.03%2080.74%2C72.34%20C73.98%2C81.64%2085.17%2C78.84%2075.86%2C85.60%20C66.56%2C92.36%2072.68%2C82.59%2061.74%2C86.14%20C50.81%2C89.69%2061.50%2C94.00%2050.00%2C94.00%20C38.50%2C94.00%2049.19%2C89.69%2038.26%2C86.14%20C27.32%2C82.59%2033.44%2C92.36%2024.14%2C85.60%20C14.83%2C78.84%2026.02%2C81.64%2019.26%2C72.34%20C12.50%2C63.03%2011.71%2C74.53%208.15%2C63.60%20C4.60%2C52.66%2012.00%2C61.50%2012.00%2C50.00%20C12.00%2C38.50%204.60%2C47.34%208.15%2C36.40%20C11.71%2C25.47%2012.50%2C36.97%2019.26%2C27.66%20C26.02%2C18.36%2014.83%2C21.16%2024.14%2C14.40%20C33.44%2C7.64%2027.32%2C17.41%2038.26%2C13.86%20C49.19%2C10.31%2038.50%2C6.00%2050.00%2C6.00%20Z%22%2F%3E%3C%2Fsvg%3E');
 
   flex-shrink: 0;
@@ -145,102 +143,90 @@
   .lunel-bundles__badge-num {
   color: #26b33d;
 }
-/* ============== top_badges ============== */
 
-/* ============== bottom_badges ============== */
-#lunel-bundles-root .lunel-bundles__bottom_badges {
-  position: absolute;
-  bottom: -12px;
-  inset-inline-start: 50%;
-  transform: translateX(50%);
-
+#lunel-bundles-root .lunel-bundles__product-details {
   display: flex;
-  gap: 6px;
-  flex-wrap: nowrap;
-
-  color: red;
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 1.1;
-}
-
-#lunel-bundles-root .lunel-bundles__bottom_badge_item {
-  padding: 6px 14px;
-  border-radius: 2px;
-  background: #ffeb3b;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-
-  white-space: nowrap; /* 👈 prevents text wrapping */
-}
-/* ============== bottom_badges ============== */
-
-#lunel-bundles-root .lunel-bundles__badge {
-  position: absolute;
-  top: -12px;
-  inset-inline-start: 50%;
-  transform: translateX(50%);
-  padding: 6px 14px;
-  border-radius: 2px;
-  background: #ffeb3b;
-  color: #111;
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 1.1;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  align-items: center;
+  flex: 1;
+  gap: 15px;
+  min-width: 0;
 }
 
 #lunel-bundles-root .lunel-bundles__media {
-  width: 112px;
-  height: 72px;
-  background: transparent;
-  overflow: visible;
+  flex-shrink: 0;
+  width: 100px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  border: 1px solid #eaeaea;
   display: grid;
   place-items: center;
 }
 
 #lunel-bundles-root .lunel-bundles__img {
-  margin-top: 10px;
-  max-width: 112px;
-  max-height: 72px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
 }
 
-#lunel-bundles-root .lunel-bundles__label {
-  font-size: 18px;
+#lunel-bundles-root .lunel-bundles__product-description {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding: 0 5px;
+  margin-top: 10px;
+  min-width: 0;
+}
+
+#lunel-bundles-root .lunel-bundles__title {
+  font-size: 15px;
+  color: #333;
   font-weight: 800;
-  color: #111;
-  line-height: 1.25;
-  text-align: center;
-  padding: 0 6px;
-  margin-bottom: 10px;
-  margin-top: 25px;
+  line-height: 1.35;
+}
+
+#lunel-bundles-root .lunel-bundles__subtitle {
+  font-size: 12px;
+  color: #666;
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+#lunel-bundles-root .lunel-bundles__discount-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  direction: ltr;
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+#lunel-bundles-root .lunel-bundles__discount-text {
+  font-size: 14px;
+  background: #ffeb3b;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  white-space: nowrap;
+  color: #ff4d24;
 }
 
 @media (max-width: 640px) {
-  #lunel-bundles-root .lunel-bundles__grid {
-    gap: 10px;
-  }
-
   #lunel-bundles-root .lunel-bundles__card {
-    padding: 16px 12px 14px;
+    padding: 12px 12px;
   }
 
   #lunel-bundles-root .lunel-bundles__media {
-    width: 104px;
-    height: 66px;
+    width: 88px;
+    height: 70px;
   }
 
-  #lunel-bundles-root .lunel-bundles__label {
-    font-size: 16px;
-  }
-
-  /* Only one top bar is created on small screens (two bars are created when there are fewer than 3 cards) */
-  #lunel-bundles-root
-    .lunel-bundles__top_badges
-    .lunel-bundles__top_badge_item:nth-child(n + 2) {
-    display: none;
+  #lunel-bundles-root .lunel-bundles__title {
+    font-size: 14px;
   }
 }
-/*=========== Lunel — product bundles End ======================================= */
+/*=========== Lunel — product bundles End ===================================*/

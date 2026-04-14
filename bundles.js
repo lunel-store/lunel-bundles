@@ -124,9 +124,7 @@
         '<span class="lunel-bundles__top_badge_flame" aria-hidden="true">\uD83D\uDD25</span>';
     }
 
-    return `
-        <div class="lunel-bundles__top_badge_item ${tone}-badge">${iconHtml}${iconHtml ? ' ' : ''}${text}</div>
-    `;
+    return `<span class="lunel-bundles__top_badge_item ${tone}-badge">${iconHtml}${iconHtml ? ' ' : ''}${text}</span>`;
   }
 
   function buildRibbonsBlock(bundle, cardCount) {
@@ -148,6 +146,16 @@
       .map((bundle) => {
         const ribbons = buildRibbonsBlock(bundle, nCards);
         const hasRibbons = ribbons ? ' lunel-bundles__card--has-ribbons' : '';
+        const subtitleRaw =
+          bundle.subtitle != null ? String(bundle.subtitle).trim() : '';
+        const subtitleBlock = subtitleRaw
+          ? `<div class="lunel-bundles__subtitle" dir="rtl"><span>${escapeHtml(subtitleRaw)}</span></div>`
+          : '';
+        const discountRaw =
+          bundle.discountText != null ? String(bundle.discountText).trim() : '';
+        const discountBlock = discountRaw
+          ? `<div class="lunel-bundles__discount-wrap"><span class="lunel-bundles__discount-text">${escapeHtml(discountRaw)}</span></div>`
+          : '';
         return `
             <a class="lunel-bundles__card${bundle.selected ? ' lunel-bundles__card--selected' : ''}${hasRibbons}"
                href="${escapeHtml(resolveBundleHref(bundle))}"
@@ -155,13 +163,13 @@
                aria-pressed="${String(!!bundle.selected)}"
                data-bundle-id="${bundle.id}">
                 <div class="lunel-bundles__top_badges">${ribbons}</div>
-
-                <div class="lunel-bundles__media">
-                    <img class="lunel-bundles__img"
+                <div class="lunel-bundles__product-details">
+                    <div class="lunel-bundles__media">
+                        <img class="lunel-bundles__img"
                             src="${escapeHtml(bundle.imageUrl)}"
                             alt="${escapeHtml(bundle.title)}"
-                            width="112"
-                            height="72"
+                            width="100"
+                            height="80"
                             decoding="async"
                             loading="eager"
                             onerror="
@@ -170,16 +178,16 @@
                                     this.dataset.fallback = 1;
                                     this.src='${escapeHtml(bundle.fallbackImageUrl)}';
                                 } else {
-                                    this.src='https://placehold.co/112x72?text=No+Image';
+                                    this.src='https://placehold.co/100x80?text=No+Image';
                                 }
                         ">
+                    </div>
+                    <div class="lunel-bundles__product-description">
+                        <strong class="lunel-bundles__title" dir="rtl">${escapeHtml(bundle.title)}</strong>
+                        ${subtitleBlock}
+                    </div>
                 </div>
-                <div class="lunel-bundles__label" dir="rtl">${escapeHtml(bundle.title)}</div>
-                <div class="lunel-bundles__label" dir="rtl">${escapeHtml(bundle.subtitle)}</div>
-     
-                <div class="lunel-bundles__bottom_badges">
-                    <div class="lunel-bundles__bottom_badge_item">${escapeHtml(bundle.discountText)}</div>
-                </div>
+                ${discountBlock}
             </a>`;
       })
       .join('');
@@ -187,7 +195,7 @@
     return `
             <section id="${LUNEL_BUNDLES_ROOT_ID}" class="lunel-bundles" dir="rtl">
                 <h3 class="lunel-bundles__heading">المجموعات</h3>
-                <div class="lunel-bundles__grid ${nCards >= 3 ? 'three-columns' : ''}">${cardsHTML}</div>
+                <div class="lunel-bundles__grid">${cardsHTML}</div>
             </section>
         `;
   }

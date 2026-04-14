@@ -112,17 +112,6 @@
         selected: 'bundle-3',
         bundles: [
           {
-            id: 'bundle-3',
-            metadata: {
-              discountText: 'وفر %50',
-              topRibbon: {
-                text: 'الأكثر مبيعاً',
-                tone: 'orange',
-                type: 'flame',
-              },
-            },
-          },
-          {
             id: 'bundle-1',
             metadata: {
               discountText: 'وفر %30',
@@ -134,6 +123,17 @@
             metadata: {
               discountText: 'وفر %30',
               topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
+            },
+          },
+          {
+            id: 'bundle-3',
+            metadata: {
+              discountText: 'وفر %50',
+              topRibbon: {
+                text: 'الأكثر مبيعاً',
+                tone: 'orange',
+                type: 'flame',
+              },
             },
           },
         ],

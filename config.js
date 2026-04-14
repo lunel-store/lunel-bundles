@@ -35,6 +35,7 @@
       'bundle-1': {
         id: 'bundle-1',
         title: 'مجموعة التفتيح والنضارة',
+        subtitle: 'الروتين المتكامل للتفتيح والنضارة',
         path: 'lunel-refund-return-guarantee-3x3/p1904366049',
         imageUrl: lunelJsdelivrImage('p1904366049.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p1904366049.webp', true),
@@ -42,6 +43,7 @@
       'bundle-2': {
         id: 'bundle-2',
         title: 'مجموعة الترطيب والعناية بالعين',
+        subtitle: 'الروتين المتكامل للتفتيح والنضارة',
         path: 'lunel-refund-return-guarantee-3x3/p1644875761',
         imageUrl: lunelJsdelivrImage('p1644875761.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p1644875761.webp', true),
@@ -49,6 +51,7 @@
       'bundle-3': {
         id: 'bundle-3',
         title: 'مجموعة لونيل المتكاملة',
+        subtitle: 'الروتين المتكامل للتفتيح والنضارة',
         path: 'lunel-refund-return-guarantee-3x3/p2094249977',
         imageUrl: lunelJsdelivrImage('p2094249977.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p2094249977.webp', true),
@@ -181,6 +184,7 @@
             return {
               id: base.id,
               title: base.title,
+              subtitle: base.subtitle,
               path: base.path,
               href: productHrefFromPath(base.path),
               imageUrl: base.imageUrl,

@@ -175,6 +175,7 @@
                         ">
                 </div>
                 <div class="lunel-bundles__label" dir="rtl">${escapeHtml(bundle.title)}</div>
+                <div class="lunel-bundles__label" dir="rtl">${escapeHtml(bundle.subtitle)}</div>
      
                 <div class="lunel-bundles__bottom_badges">
                     <div class="lunel-bundles__bottom_badge_item">${escapeHtml(bundle.discountText)}</div>

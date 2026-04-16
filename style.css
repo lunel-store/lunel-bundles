@@ -86,6 +86,10 @@
   background: #f24822 !important;
 }
 
+#lunel-bundles-root .lunel-bundles__top_badge_item.blue-badge {
+  background: #0095f6 !important;
+}
+
 #lunel-bundles-root .lunel-bundles__top_badge_item.green-badge {
   background: #27b43e !important;
 }
@@ -131,6 +135,11 @@
 #lunel-bundles-root .lunel-bundles__top_badge_item.orange-badge .badge,
 #lunel-bundles-root .lunel-bundles__top_badge_item.orange-badge .lunel-bundles__badge-num {
   color: #f24822;
+}
+
+#lunel-bundles-root .lunel-bundles__top_badge_item.badge-badge .badge,
+#lunel-bundles-root .lunel-bundles__top_badge_item.badge-badge .lunel-bundles__badge-num {
+  color: #0095f6;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item.green-badge .badge,

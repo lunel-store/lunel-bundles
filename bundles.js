@@ -111,7 +111,7 @@
 
   function buildRibbonSpan(ribbon) {
     if (!ribbon || !String(ribbon.text || '').trim()) return '';
-    const tone = /^(orange|green)$/.test(ribbon.tone) ? ribbon.tone : 'green';
+    const tone = /^(orange|green|blue)$/.test(ribbon.tone) ? ribbon.tone : 'green';
     const text = escapeHtml(ribbon.text);
     const type = ribbon.type;
 

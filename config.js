@@ -7,7 +7,7 @@
   'use strict';
 
   // Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
-  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.4';
+  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.5';
 
   var LUNEL_GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
   var JSDELIVR_PREFIX =
@@ -70,6 +70,7 @@
             id: 'bundle-1',
             metadata: {
               discountText: CATALOG['bundle-1'].discountText,
+              topRibbon: { text: 'أفضل قيمة', tone: 'blue', type: 'seal' },
             },
           },
           {
@@ -94,15 +95,16 @@
             id: 'bundle-2',
             metadata: {
               discountText: CATALOG['bundle-2'].discountText,
-              topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
+              topRibbon: { text: 'وصل حديثاً', tone: 'blue', type: 'seal' },
             },
           },
           {
             id: 'bundle-3',
             metadata: {
               discountText: CATALOG['bundle-3'].discountText,
-              topRibbon: {
-                text: 'الأكثر مبيعاً',
+              topRibbon: { text: 'الأكثر مبيعاً', tone: 'green', type: 'seal' },
+              topRibbon2: {
+                text: 'ينفد خلال أيام',
                 tone: 'orange',
                 type: 'flame',
               },
@@ -118,14 +120,14 @@
             id: 'bundle-2',
             metadata: {
               discountText: CATALOG['bundle-2'].discountText,
-              topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
+              topRibbon: { text: 'وصل حديثاً', tone: 'blue', type: 'seal' },
             },
           }, ,
           {
             id: 'bundle-1',
             metadata: {
               discountText: CATALOG['bundle-1'].discountText,
-              topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
+              topRibbon: { text: 'أفضل قيمة', tone: 'blue', type: 'seal' },
             },
           },
           {

@@ -144,7 +144,7 @@
     const parts = [];
     const a = buildRibbonSpan(bundle.topRibbon);
     if (a) parts.push(a);
-    if (cardCount < 3 && bundle.topRibbon2) {
+    if (bundle.topRibbon2) {
       const b = buildRibbonSpan(bundle.topRibbon2);
       if (b) parts.push(b);
     }

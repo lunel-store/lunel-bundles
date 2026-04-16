@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.5';
+  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.6';
   var LUNEL_GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
   var JSDELIVR_PREFIX =
     'https://cdn.jsdelivr.net/gh/' + LUNEL_GITHUB_REPO + '@';

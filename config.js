@@ -7,7 +7,7 @@
   'use strict';
 
   // Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
-  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.5';
+  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.6';
 
   var LUNEL_GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
   var JSDELIVR_PREFIX =
@@ -77,7 +77,7 @@
             id: 'bundle-3',
             metadata: {
               discountText: CATALOG['bundle-3'].discountText,
-              topRibbon: { text: 'الأكثر مبيعاً', tone: 'green', type: 'seal' },
+              topRibbon: { text: 'الأكثر مبيعًا', tone: 'green', type: 'seal' },
               topRibbon2: {
                 text: 'ينفد خلال أيام',
                 tone: 'orange',
@@ -95,14 +95,14 @@
             id: 'bundle-2',
             metadata: {
               discountText: CATALOG['bundle-2'].discountText,
-              topRibbon: { text: 'وصل حديثاً', tone: 'blue', type: 'seal' },
+              topRibbon: { text: 'وصل حديثًا', tone: 'blue', type: 'seal' },
             },
           },
           {
             id: 'bundle-3',
             metadata: {
               discountText: CATALOG['bundle-3'].discountText,
-              topRibbon: { text: 'الأكثر مبيعاً', tone: 'green', type: 'seal' },
+              topRibbon: { text: 'الأكثر مبيعًا', tone: 'green', type: 'seal' },
               topRibbon2: {
                 text: 'ينفد خلال أيام',
                 tone: 'orange',
@@ -120,7 +120,7 @@
             id: 'bundle-2',
             metadata: {
               discountText: CATALOG['bundle-2'].discountText,
-              topRibbon: { text: 'وصل حديثاً', tone: 'blue', type: 'seal' },
+              topRibbon: { text: 'وصل حديثًا', tone: 'blue', type: 'seal' },
             },
           }, ,
           {
@@ -135,7 +135,7 @@
             metadata: {
               discountText: CATALOG['bundle-3'].discountText,
               topRibbon: {
-                text: 'الأكثر مبيعاً',
+                text: 'الأكثر مبيعًا',
                 tone: 'orange',
                 type: 'flame',
               },

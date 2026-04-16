@@ -7,7 +7,7 @@
   'use strict';
 
   // Bump when you change config, bundles.js, or image assets (loader + fallbacks use v{VERSION} then main).
-  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.3';
+  var LUNEL_BUNDLES_CONFIG_VERSION = '7.1.4';
 
   var LUNEL_GITHUB_REPO = 'lunel-store/salla-lunel-bundles';
   var JSDELIVR_PREFIX =
@@ -35,18 +35,20 @@
       'bundle-1': {
         id: 'bundle-1',
         title: 'مجموعة التفتيح والنضارة',
-        subtitle: 'الروتين المتكامل للتفتيح والنضارة',
+        subtitle: 'الروتين المتقدم للتفتيح والنضارة',
         path: 'lunel-refund-return-guarantee-3x3/p1904366049',
         imageUrl: lunelJsdelivrImage('p1904366049.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p1904366049.webp', true),
+        discountText: 'وفر %35',
       },
       'bundle-2': {
         id: 'bundle-2',
-        title: 'مجموعة الترطيب والعناية بالعين',
-        subtitle: 'الروتين المتكامل للتفتيح والنضارة',
+        title: 'مجموعة الهالات والترطيب',
+        subtitle: 'الروتين الأساسي للتفتيح والنضارة',
         path: 'lunel-refund-return-guarantee-3x3/p1644875761',
         imageUrl: lunelJsdelivrImage('p1644875761.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p1644875761.webp', true),
+        discountText: 'وفر %40',
       },
       'bundle-3': {
         id: 'bundle-3',
@@ -55,6 +57,7 @@
         path: 'lunel-refund-return-guarantee-3x3/p2094249977',
         imageUrl: lunelJsdelivrImage('p2094249977.webp'),
         fallbackImageUrl: lunelJsdelivrImage('p2094249977.webp', true),
+        discountText: 'وفر %42',
       },
     };
 
@@ -66,13 +69,13 @@
           {
             id: 'bundle-1',
             metadata: {
-              discountText: 'وفر %30',
+              discountText: CATALOG['bundle-1'].discountText,
             },
           },
           {
             id: 'bundle-3',
             metadata: {
-              discountText: 'وفر %50',
+              discountText: CATALOG['bundle-3'].discountText,
               topRibbon: { text: 'الأكثر مبيعاً', tone: 'green', type: 'seal' },
               topRibbon2: {
                 text: 'ينفد خلال أيام',
@@ -90,14 +93,14 @@
           {
             id: 'bundle-2',
             metadata: {
-              discountText: 'وفر %30',
+              discountText: CATALOG['bundle-2'].discountText,
               topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
             },
           },
           {
             id: 'bundle-3',
             metadata: {
-              discountText: 'وفر %50',
+              discountText: CATALOG['bundle-3'].discountText,
               topRibbon: {
                 text: 'الأكثر مبيعاً',
                 tone: 'orange',
@@ -112,23 +115,23 @@
         selected: 'bundle-3',
         bundles: [
           {
-            id: 'bundle-1',
-            metadata: {
-              discountText: 'وفر %30',
-              topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
-            },
-          },
-          {
             id: 'bundle-2',
             metadata: {
-              discountText: 'وفر %30',
+              discountText: CATALOG['bundle-2'].discountText,
+              topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
+            },
+          }, ,
+          {
+            id: 'bundle-1',
+            metadata: {
+              discountText: CATALOG['bundle-1'].discountText,
               topRibbon: { text: 'لأفضل نتائج', tone: 'green', type: 'seal' },
             },
           },
           {
             id: 'bundle-3',
             metadata: {
-              discountText: 'وفر %50',
+              discountText: CATALOG['bundle-3'].discountText,
               topRibbon: {
                 text: 'الأكثر مبيعاً',
                 tone: 'orange',
@@ -245,10 +248,10 @@
       script.onload = function () {
         console.log(
           '✅ Lunel Bundles: Loaded successfully (v' +
-            LUNEL_BUNDLES_CONFIG_VERSION +
-            ', ref ' +
-            ref +
-            ')',
+          LUNEL_BUNDLES_CONFIG_VERSION +
+          ', ref ' +
+          ref +
+          ')',
         );
       };
       script.onerror = function () {

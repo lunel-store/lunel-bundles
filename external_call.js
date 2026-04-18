@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const LUNEL_BUNDLES_CONFIG_VERSION = '7.3.2';
+  const LUNEL_BUNDLES_CONFIG_VERSION = '7.3.3';
 
   const JSDELIVR_PREFIX =
     'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v' +

@@ -9,7 +9,7 @@
   window.__lunelBundlesInitStarted = true;
 
   window.LUNEL_JSDELIVR_LINK =
-    'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v8.0.0';
+    'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v8.0.1/';
 
   function urlFor(file) {
     const name = typeof file === 'string' ? file.replace(/^\/+/, '') : '';
@@ -27,7 +27,7 @@
     }
 
     try {
-      return new URL(name, baseLink).href;
+      return new URL(name, baseLink.replace(/\/?$/, '/')).href;
     } catch (error) {
       console.error('urlFor: Failed to construct URL', {
         file: name,

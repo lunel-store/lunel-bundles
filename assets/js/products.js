@@ -31,6 +31,7 @@
       imageUrl: window.LunelUrlBuilder('assets/images/p1904366049.webp'),
       discountText: 'وفر %35',
       order: 2,
+      skip_if_product: 1644875761,
       ribbon1: {
         text: 'أفضل قيمة',
         tone: 'blue',
@@ -47,6 +48,7 @@
       imageUrl: window.LunelUrlBuilder('assets/images/p1644875761.webp'),
       discountText: 'وفر %40',
       order: 1,
+      skip_if_product: 1904366049,
       ribbon1: {
         text: 'وصل حديثًا',
         tone: 'blue',
@@ -63,6 +65,7 @@
       imageUrl: window.LunelUrlBuilder('assets/images/p2094249977.webp'),
       discountText: 'وفر %42',
       order: 3,
+      skip_if_product: null,
       ribbon1: {
         text: 'الأكثر مبيعًا',
         tone: 'green',

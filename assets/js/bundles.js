@@ -144,9 +144,20 @@
     return parts.join('');
   }
 
+  function shouldShowBundle(bundle, currentProductId) {
+    const skip = bundle.skip_if_product;
+    if (skip == null || skip === '') return true;
+    return String(skip) !== String(currentProductId);
+  }
+
   function buildBundlesHTML(currentProductId) {
-    const cardsHTML = Object.values(BUNDLES_PRODUCTS)
-      .sort((a, b) => a.order - b.order)
+    const bundlesToShow = Object.values(BUNDLES_PRODUCTS)
+      .filter((bundle) => shouldShowBundle(bundle, currentProductId))
+      .sort((a, b) => a.order - b.order);
+
+    if (!bundlesToShow.length) return '';
+
+    const cardsHTML = bundlesToShow
       .map((bundle) => {
         // Ribbons
         const ribbons = buildRibbonsBlock(bundle);
@@ -218,7 +229,12 @@
     if (!target) return false;
 
     const { element, position } = target;
-    element.insertAdjacentHTML(position, buildBundlesHTML(currentProductId));
+    const html = buildBundlesHTML(currentProductId);
+    if (!html) {
+      console.log('Lunel Bundles: No bundles to show (skip_if_product filter)');
+      return false;
+    }
+    element.insertAdjacentHTML(position, html);
     attachClickHandler();
     console.log('Lunel Bundles: Successfully inserted bundles');
     return true;

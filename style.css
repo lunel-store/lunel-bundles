@@ -43,7 +43,7 @@
   margin-bottom: 18px;
   margin-top: 18px;
   width: 100%;
-  max-width: 450px;
+  max-width: 5000px;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -235,7 +235,7 @@
 
   #lunel-bundles-root .lunel-bundles__media {
     width: 88px;
-    height: 70px;
+    height: 88px;
   }
 
   #lunel-bundles-root .lunel-bundles__title {

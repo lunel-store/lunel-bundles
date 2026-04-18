@@ -9,7 +9,7 @@
   if (window.__lunelBundlesConstantsLoaded) return;
   window.__lunelBundlesConstantsLoaded = true;
 
-  window.LUNEL_BUNDLES_CONFIG_VERSION = '7.3.1';
+  window.LUNEL_BUNDLES_CONFIG_VERSION = '7.3.2';
   window.LUNEL_JSDELIVR_PREFIX =
     'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@';
   window.LUNEL_JSDELIVR_TAG_PREFIX =

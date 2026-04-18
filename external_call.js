@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const LUNEL_BUNDLES_CONFIG_VERSION = '7.3.1';
+  const LUNEL_BUNDLES_CONFIG_VERSION = '7.3.2';
 
   const JSDELIVR_PREFIX =
     'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v' +
@@ -13,6 +13,10 @@
   const JSDELIVR_CONSTANTS_URL =
     JSDELIVR_PREFIX +
     '/lunel-constants.js?v=' +
+    encodeURIComponent(LUNEL_BUNDLES_CONFIG_VERSION);
+  const JSDELIVR_PRODUCTS_BADGES_URL =
+    JSDELIVR_PREFIX +
+    '/product_badge.js?v=' +
     encodeURIComponent(LUNEL_BUNDLES_CONFIG_VERSION);
   const JSDELIVR_STYLE_URL =
     JSDELIVR_PREFIX +
@@ -51,5 +55,6 @@
 
   loadLunelJS(JSDELIVR_CONSTANTS_URL);
   loadLunelJS(JSDELIVR_CONFIG_URL);
+  loadLunelJS(JSDELIVR_PRODUCTS_BADGES_URL);
   loadStyle();
 })();

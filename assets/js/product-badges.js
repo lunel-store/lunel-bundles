@@ -67,12 +67,22 @@
         target: 'product-bestSellers',
         ribbon: ribbon1,
       });
+      updateProductBadge({
+        id: 'details-slider-' + id,
+        target: 'product-bestSellers',
+        ribbon: ribbon1,
+      });
     } else {
       removeProductBadgeTarget(id, 'product-bestSellers');
     }
     if (ribbon2) {
       updateProductBadge({
         id: id,
+        target: 'product-outWithin',
+        ribbon: ribbon2,
+      });
+      updateProductBadge({
+        id: 'details-slider-' + id,
         target: 'product-outWithin',
         ribbon: ribbon2,
       });

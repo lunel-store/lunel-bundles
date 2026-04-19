@@ -17,7 +17,7 @@
     const card = document.getElementById(id);
     if (!card) return;
     const container = card.querySelector(`.${CSS.escape(target)}`);
-    if (container) container.hidden = true;
+    if (container) container.style.display = 'none';
   }
 
   function updateProductBadge({ id, target, ribbon }) {
@@ -35,8 +35,6 @@
       } else {
         card.appendChild(container);
       }
-    } else {
-      container.hidden = false;
     }
 
     var svg = '';

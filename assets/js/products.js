@@ -75,7 +75,7 @@
       ribbon2: {
         text: 'توصيل مجاني',
         tone: 'orange',
-        type: 'free_delivery',
+        type: 'flame',
         color: '#f24822',
       },
     },

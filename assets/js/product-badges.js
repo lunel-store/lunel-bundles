@@ -37,6 +37,10 @@
       }
     }
 
+    // Normalize animation classes even for pre-existing containers
+    container.classList.remove('animate-pulse');
+    container.classList.add('fast-animate-pulse');
+
     var svg = '';
 
     // Update background (optional)

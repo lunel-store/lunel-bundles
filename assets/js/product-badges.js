@@ -5,7 +5,7 @@
   window.__lunelProductBadgesLoaded = true;
 
   const BADGE_TARGET_LAYOUT_CLASSES =
-    'absolute right-1 top-1 z-20 flex items-center p-1 px-2 gap-1 animate-pulse';
+    'absolute right-1 top-1 z-20 flex items-center p-1 px-2 gap-1 fast-animate-pulse';
 
   function applyBadgeLayoutClasses(el) {
     BADGE_TARGET_LAYOUT_CLASSES.split(/\s+/).forEach(function (cls) {

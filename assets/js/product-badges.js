@@ -54,7 +54,7 @@
     // Replace content
     container.innerHTML = `
     ${svg}
-    <small class="!text-xxs md:!text-xs !leading-[initial] text-white">
+    <small class="!text-xxs md:!text-xs !leading-[initial] text-white" style="font-weight: 900 !important; white-space: nowrap;">
       ${ribbon.text}
     </small>
   `;

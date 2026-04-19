@@ -17,7 +17,7 @@
     const card = document.getElementById(id);
     if (!card) return;
     const container = card.querySelector(`.${CSS.escape(target)}`);
-    if (container) container.remove();
+    if (container) container.hidden = true;
   }
 
   function updateProductBadge({ id, target, ribbon }) {
@@ -35,6 +35,8 @@
       } else {
         card.appendChild(container);
       }
+    } else {
+      container.hidden = false;
     }
 
     var svg = '';
@@ -74,6 +76,7 @@
       });
     } else {
       removeProductBadgeTarget(id, 'product-bestSellers');
+      removeProductBadgeTarget('details-slider-' + id, 'product-bestSellers');
     }
     if (ribbon2) {
       updateProductBadge({
@@ -88,6 +91,7 @@
       });
     } else {
       removeProductBadgeTarget(id, 'product-outWithin');
+      removeProductBadgeTarget('details-slider-' + id, 'product-outWithin');
     }
   }
 

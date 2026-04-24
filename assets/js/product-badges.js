@@ -13,23 +13,51 @@
     });
   }
 
-  function removeProductBadgeTarget({ id, target, useId = true }) {
-    const card = useId
-      ? document.getElementById(id)
-      : document.querySelector(`[data-product-id="${id}"]`);
-    if (!card) return;
-
-    const container = card.querySelector(`.${CSS.escape(target)}`);
+  function removeProductBadgeTarget(container) {
     if (container) container.style.display = 'none';
+    return;
   }
 
-  function updateProductBadge({ id, target, ribbon, useId = true }) {
-    const card = useId
-      ? document.getElementById(id)
-      : document.querySelector(`[data-product-id="${id}"]`);
-    if (!card) return;
+  function safeAppendSvg(container, svgString) {
+    if (!container || !svgString || typeof svgString !== 'string') return;
+    if (!/^\s*<svg[\s>]/i.test(svgString)) return;
 
+    const tpl = document.createElement('template');
+    tpl.innerHTML = svgString.trim();
+    const svg = tpl.content.firstElementChild;
+    if (!svg || svg.tagName.toLowerCase() !== 'svg') return;
+
+    const forbidden = svg.querySelectorAll('script, foreignObject');
+    forbidden.forEach((n) => n.remove());
+
+    const all = svg.querySelectorAll('*');
+    all.forEach((el) => {
+      Array.from(el.attributes).forEach((attr) => {
+        const name = attr.name.toLowerCase();
+        const value = String(attr.value || '');
+        if (name.startsWith('on')) el.removeAttribute(attr.name);
+        if (
+          (name === 'href' || name === 'xlink:href') &&
+          /^\s*javascript:/i.test(value)
+        ) {
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+
+    container.appendChild(svg);
+  }
+
+  function updateProductBadge({ card, target, ribbon }) {
+    if (!card || !target) return;
+
+    // Get container
     let container = card.querySelector(`.${CSS.escape(target)}`);
+
+    // If no ribbon data, remove badge (if exists) and exit
+    if (!ribbon) return removeProductBadgeTarget(container);
+
+    // Create if not exists
     if (!container) {
       container = document.createElement('div');
       container.className = target;
@@ -42,6 +70,9 @@
       }
     }
 
+    // If it was hidden previously, re-show it
+    container.style.display = 'flex';
+
     // Normalize animation classes even for pre-existing containers
     container.classList.remove('animate-pulse');
     container.classList.add('fast-animate-pulse');
@@ -49,9 +80,7 @@
     var svg = '';
 
     // Update background (optional)
-    if (ribbon.color) {
-      container.style.background = ribbon.color;
-    }
+    container.style.background = ribbon.color || '#27b43e';
 
     if (typeof window.getLunelBundleBadgeIconHtml === 'function') {
       svg = window.getLunelBundleBadgeIconHtml(ribbon.type);
@@ -61,87 +90,63 @@
     }
 
     // Replace content
-    container.innerHTML = `
-    ${svg}
-    <small class="!text-xxs md:!text-xs !leading-[initial] text-white" style="font-weight: 900 !important; white-space: nowrap;">
-      ${ribbon.text}
-    </small>
-  `;
+    container.replaceChildren();
+    safeAppendSvg(container, svg);
+
+    const textEl = document.createElement('small');
+    textEl.className =
+      '!text-xxs md:!text-xs !leading-[initial] text-white';
+    textEl.style.fontWeight = '900';
+    textEl.style.whiteSpace = 'nowrap';
+    textEl.textContent = ribbon.text == null ? '' : String(ribbon.text);
+    container.appendChild(textEl);
+  }
+
+  function applyRibbons({ card, ribbon1, ribbon2 }) {
+    if (!card) return;
+
+    updateProductBadge({
+      card: card,
+      target: 'product-bestSellers',
+      ribbon: ribbon1,
+    });
+
+    updateProductBadge({
+      card: card,
+      target: 'product-outWithin',
+      ribbon: ribbon2,
+    });
+  }
+
+  // home page
+  function featuredProdCards({ id, ribbon1, ribbon2 }) {
+    const card = document.querySelector(
+      `.featured-prod-cards salla-products-list custom-salla-product-card[data-product-id="${id}"]`,
+    );
+
+    applyRibbons({ card, ribbon1, ribbon2 });
+  }
+
+  // Product List
+  function stationaryProducts({ id, ribbon1, ribbon2 }) {
+    const card = document.querySelector(
+      `section .stationary-products salla-products-list custom-salla-product-card[data-product-id="${id}"]`,
+    );
+
+    applyRibbons({ card, ribbon1, ribbon2 });
+  }
+
+  // Product Page
+  function productPage({ id, ribbon1, ribbon2 }) {
+    const card = document.querySelector(`salla-slider#details-slider-${id}`);
+
+    applyRibbons({ card, ribbon1, ribbon2 });
   }
 
   function updateProductBadges({ id, ribbon1, ribbon2 }) {
-    if (ribbon1) {
-      updateProductBadge({
-        id: id,
-        target: 'product-bestSellers',
-        ribbon: ribbon1,
-        useId: true,
-      });
-      updateProductBadge({
-        id: 'details-slider-' + id,
-        target: 'product-bestSellers',
-        ribbon: ribbon1,
-        useId: true,
-      });
-      updateProductBadge({
-        id: id,
-        target: 'product-bestSellers',
-        ribbon: ribbon1,
-        useId: false,
-      });
-    } else {
-      removeProductBadgeTarget({
-        id: id,
-        target: 'product-bestSellers',
-        useId: true,
-      });
-      removeProductBadgeTarget({
-        id: 'details-slider-' + id,
-        target: 'product-bestSellers',
-        useId: true,
-      });
-      removeProductBadgeTarget({
-        id: id,
-        target: 'product-bestSellers',
-        useId: false,
-      });
-    }
-    if (ribbon2) {
-      updateProductBadge({
-        id: id,
-        target: 'product-outWithin',
-        ribbon: ribbon2,
-        useId: true,
-      });
-      updateProductBadge({
-        id: 'details-slider-' + id,
-        target: 'product-outWithin',
-        ribbon: ribbon2,
-        useId: true,
-      });
-      updateProductBadge({
-        id: id,
-        target: 'product-outWithin',
-        ribbon: ribbon2,
-        useId: false,
-      });
-    } else {
-      removeProductBadgeTarget({
-        id: id,
-        target: 'product-outWithin',
-        useId: true,
-      });
-      removeProductBadgeTarget({
-        id: 'details-slider-' + id,
-        target: 'product-outWithin',
-        useId: true,
-      });
-      removeProductBadgeTarget({
-        id: id,
-        target: 'product-outWithin',
-        useId: false,
-      });
-    }
+    featuredProdCards({ id, ribbon1, ribbon2 });
+    stationaryProducts({ id, ribbon1, ribbon2 });
+    productPage({ id, ribbon1, ribbon2 });
   }
 
   function applyAllProductBadges() {
@@ -182,10 +187,14 @@
   if (!window.LUNEL_PRODUCTS) scheduleRetry();
 
   var moPending = null;
+  var lastMoApplyAt = 0;
   var observer = new MutationObserver(function () {
     if (moPending) clearTimeout(moPending);
     moPending = setTimeout(function () {
       moPending = null;
+      const now = Date.now();
+      if (now - lastMoApplyAt < 150) return;
+      lastMoApplyAt = now;
       applyAllProductBadges();
     }, 80);
   });

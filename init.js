@@ -8,8 +8,9 @@
   if (window.__lunelBundlesInitStarted) return;
   window.__lunelBundlesInitStarted = true;
 
-  window.LUNEL_JSDELIVR_LINK =
-    'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v8.1.7/';
+  const LUNEL_REPO_VERSION = window.LUNEL_REPO_VERSION || 'main';
+
+  window.LUNEL_JSDELIVR_LINK = `https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@${LUNEL_REPO_VERSION}/`;
 
   function urlFor(file) {
     const name = typeof file === 'string' ? file.replace(/^\/+/, '') : '';

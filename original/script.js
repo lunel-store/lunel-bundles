@@ -840,7 +840,7 @@ function addProductDetailsHeading() {
   // بعض التنسيقات البسيطة
   heading.style.cssText = `
       margin: 1.5rem 0;
-      font-size: 1.6rem !important;
+      font-size: 1.3rem !important;
       line-height: 2.25rem !important;
       font-weight: 900 !important;
       letter-spacing: normal !important;

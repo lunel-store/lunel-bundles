@@ -3,8 +3,9 @@
 
   window.OUT_OF_STOCK_PRODUCTS = [];
 
-  const LUNEL_JSDELIVR_LINK =
-    'https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@v8.1.7/init.js';
+  const LUNEL_REPO_VERSION = window.LUNEL_REPO_VERSION || 'main';
+
+  const LUNEL_JSDELIVR_LINK = `https://cdn.jsdelivr.net/gh/lunel-store/lunel-bundles@${LUNEL_REPO_VERSION}/init.js`;
 
   if (window.__lunelInitBootstrapExecuted) return;
   window.__lunelInitBootstrapExecuted = true;

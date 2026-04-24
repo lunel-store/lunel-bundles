@@ -245,3 +245,12 @@ body .featured_product_larg a.product-entry__title {
 div#salla-metadata strong {
   font-weight: 900 !important;
 }
+
+#common_questions-10 .tab-accordion a svg {
+  margin: 0px 6px !important;
+}
+
+/* .accordion-content-all i.arrow {
+  background: transparent;
+  color: #e3e3e1 !important;
+} */

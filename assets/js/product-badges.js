@@ -13,9 +13,12 @@
     });
   }
 
-  function removeProductBadgeTarget(id, target) {
-    const card = document.getElementById(id);
+  function removeProductBadgeTarget({ id, target, useId = true }) {
+    const card = useId
+      ? document.getElementById(id)
+      : document.querySelector(`[data-product-id="${id}"]`);
     if (!card) return;
+
     const container = card.querySelector(`.${CSS.escape(target)}`);
     if (container) container.style.display = 'none';
   }
@@ -87,8 +90,21 @@
         useId: false,
       });
     } else {
-      removeProductBadgeTarget(id, 'product-bestSellers');
-      removeProductBadgeTarget('details-slider-' + id, 'product-bestSellers');
+      removeProductBadgeTarget({
+        id: id,
+        target: 'product-bestSellers',
+        useId: true,
+      });
+      removeProductBadgeTarget({
+        id: 'details-slider-' + id,
+        target: 'product-bestSellers',
+        useId: true,
+      });
+      removeProductBadgeTarget({
+        id: id,
+        target: 'product-bestSellers',
+        useId: false,
+      });
     }
     if (ribbon2) {
       updateProductBadge({
@@ -110,8 +126,21 @@
         useId: false,
       });
     } else {
-      removeProductBadgeTarget(id, 'product-outWithin');
-      removeProductBadgeTarget('details-slider-' + id, 'product-outWithin');
+      removeProductBadgeTarget({
+        id: id,
+        target: 'product-outWithin',
+        useId: true,
+      });
+      removeProductBadgeTarget({
+        id: 'details-slider-' + id,
+        target: 'product-outWithin',
+        useId: true,
+      });
+      removeProductBadgeTarget({
+        id: id,
+        target: 'product-outWithin',
+        useId: false,
+      });
     }
   }
 

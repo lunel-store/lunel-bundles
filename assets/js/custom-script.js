@@ -4,6 +4,7 @@
   if (window.__lunelCustomScriptLoaded) return;
   window.__lunelCustomScriptLoaded = true;
 
+  // Start: Move gallery after metadata ------------------------
   const moveGallery = () => {
     const gallerySection = document.getElementById(
       'saji-photo-gallery-undefined',
@@ -28,4 +29,11 @@
       clearInterval(interval);
     }
   }, 300);
+  // End: Move gallery after metadata ------------------------
+
+  // Start: Hide purchase count ------------------------
+  document.querySelectorAll('.purchase-count').forEach((el) => {
+    el.style.display = 'none';
+  });
+  // End: Hide purchase count ------------------------
 })();

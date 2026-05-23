@@ -262,3 +262,7 @@ div#salla-metadata strong {
   border-radius: 12px !important;
   font-size: 1rem !important;
 }
+
+div#metadata-name {
+  flex-direction: column !important;
+}

@@ -307,3 +307,36 @@ footer .footer-menu salla-menu .s-menu-footer-list .s-menu-footer-item {
   text-align: start !important;
   margin-bottom: 0.9rem !important;
 }
+
+footer.store-footer a.footer-logo + p {
+  display: none;
+}
+
+footer.store-footer a.footer-logo + p + p {
+  margin-bottom: 1.25rem;
+  margin-top: 0.75rem;
+}
+
+salla-social .s-social-link > a {
+    color: #747474;
+    border-radius: 0.5rem;
+    border-color: #d9d8d8;
+    border-width: 1.5px;
+    background: white;
+    height: 30px;
+    width: 30px;
+}
+
+salla-contacts .s-contacts-list {
+  gap: 0.75rem !important;
+}
+
+salla-contacts a.s-contacts-item
+{
+    height: 34px !important;
+    color: #747474 !important;
+    border-radius: 0.5rem !important;
+    border-color: #d9d8d8 !important;
+    border-width: 1.5px !important;
+    background: white !important;
+}

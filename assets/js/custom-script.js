@@ -51,4 +51,20 @@
       }
   });
   // End: move tabby and tamara under the prices ------------------------
+
+// Add a "Product Details" heading as the first element inside #metadata-name (if it exists).
+const metadataName = document.querySelector('#metadata-name');
+
+if (metadataName) {
+  const p = document.createElement('p');
+  p.textContent = 'تفاصيل المنتج';
+
+  Object.assign(p.style, {
+    fontWeight: '900',
+    marginBottom: '1rem',
+    fontSize: '1.5rem',
+  });
+
+  metadataName.prepend(p);
+}
 })();

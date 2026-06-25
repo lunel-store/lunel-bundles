@@ -292,3 +292,57 @@ custom-salla-product-card form .product_addCart_mob salla-add-product-button div
 custom-salla-product-card .product-entry__image {
   border-radius: 5% 5% 0 0 !important;
 }
+
+footer strong.footer-title {
+    font-weight: 900 !important;
+    font-size: 1.1rem;
+}
+
+footer .footer-menu salla-menu .s-menu-footer-list {
+  gap: 1.5rem !important;
+}
+
+footer .footer-menu salla-menu .s-menu-footer-list .s-menu-footer-item {
+  display: block;
+  text-align: start !important;
+  margin-bottom: 0.9rem !important;
+}
+
+/* ========= Testimonials card — Figma design ========= */
+
+/* (2) Light / subtle border instead of the primary-coloured one. */
+.testimonials-content.lunel-tst {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* No avatar in the Figma design — keep just the name + stars. */
+.testimonials-content.lunel-tst .testimonial-pic {
+  display: none !important;
+}
+
+/* Reviewer name + rating stacked and centred. */
+.testimonials-content.lunel-tst .lunel-tst-meta {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.testimonials-content.lunel-tst .lunel-tst-meta salla-rating-stars {
+  order: 2;
+}
+
+/* (3) Quote glyph anchored to the bottom-left corner of the card. */
+.testimonials-content.lunel-tst .lunel-tst-quote {
+  position: absolute;
+  left: 14px;
+  bottom: 8px;
+  top: auto;
+  margin: 0;
+  font-size: 2.75rem;
+  line-height: 1;
+  opacity: 0.12;
+  pointer-events: none;
+}

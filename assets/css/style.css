@@ -323,8 +323,6 @@ salla-social .s-social-link > a {
     border-color: #d9d8d8;
     border-width: 1.5px;
     background: white;
-    height: 30px;
-    width: 30px;
 }
 
 salla-contacts .s-contacts-list {
@@ -333,10 +331,37 @@ salla-contacts .s-contacts-list {
 
 salla-contacts a.s-contacts-item
 {
-    height: 34px !important;
     color: #747474 !important;
     border-radius: 0.5rem !important;
     border-color: #d9d8d8 !important;
     border-width: 1.5px !important;
     background: white !important;
+}
+
+footer salla-social .s-social-link > a {
+    height: 30px;
+    width: 30px;
+}
+
+footer salla-contacts a.s-contacts-item
+{
+    height: 34px !important;
+}
+
+#big--menu salla-social .s-social-link > a {
+    height: 45px;
+    width: 45px;
+}
+
+#big--menu salla-contacts a.s-contacts-item
+{
+    height: 45px !important;
+}
+
+.\[\&_\.s-contacts-list\]\:\!grid-cols-3 .s-contacts-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.user-contacts.w-full {
+    padding: 3rem 2rem 1rem !important;
 }

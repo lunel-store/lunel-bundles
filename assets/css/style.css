@@ -266,3 +266,29 @@ div#salla-metadata strong {
 div#metadata-name {
   flex-direction: column !important;
 }
+
+/* ========= 2026-06-25 ========= */
+
+@media (max-width: 991px) {
+  /* Hide the custom divider line — scoped strictly to the footer */
+  .store-footer .container.md\:order-2::after {
+    display: none !important;
+  }
+
+  /* Hide the Tailwind border line above the copyright — scoped strictly to the footer */
+  .store-footer .footer-bottom .container::after {
+    display: none !important;
+  }
+}
+
+.product-entry__price div span.regular-price {
+    font-size: 1.10rem !important;
+}
+
+custom-salla-product-card form .product_addCart_mob salla-add-product-button div salla-button button {
+  height: 45px !important;
+}
+
+custom-salla-product-card .product-entry__image {
+  border-radius: 5% 5% 0 0 !important;
+}

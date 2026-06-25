@@ -295,7 +295,7 @@ custom-salla-product-card .product-entry__image {
 
 footer strong.footer-title {
     font-weight: 900 !important;
-    font-size: 1.1rem;
+    font-size: 1.25rem !important;
 }
 
 footer .footer-menu salla-menu .s-menu-footer-list {

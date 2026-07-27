@@ -113,45 +113,4 @@ const whatsappRetryInterval = setInterval(() => {
   }
 }, 250);
 // End: Homepage-only WhatsApp floating button position ------------------------
-
-// Start: Force-hide/remove injected widgets ------------------------
-const FORCED_HIDDEN_SELECTORS = [
-  'salla-cashback-banner',
-  'salla-bought-together.s-bought-together-entry',
-];
-
-const forceHideOrRemoveElements = () => {
-  FORCED_HIDDEN_SELECTORS.forEach((selector) => {
-    document.querySelectorAll(selector).forEach((node) => {
-      // Remove when possible to prevent re-layout or visibility toggles.
-      if (node && node.parentNode) {
-        node.parentNode.removeChild(node);
-        return;
-      }
-
-      // Fallback: hard-hide in case removal is not possible.
-      if (node && node.style) {
-        node.style.setProperty('display', 'none', 'important');
-        node.style.setProperty('visibility', 'hidden', 'important');
-      }
-    });
-  });
-};
-
-forceHideOrRemoveElements();
-document.addEventListener('DOMContentLoaded', forceHideOrRemoveElements);
-
-const forcedHideObserver = new MutationObserver(() => {
-  forceHideOrRemoveElements();
-});
-
-if (document.documentElement) {
-  forcedHideObserver.observe(document.documentElement, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    attributeFilter: ['class', 'style'],
-  });
-}
-// End: Force-hide/remove injected widgets ------------------------
 })();

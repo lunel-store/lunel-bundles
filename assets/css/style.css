@@ -384,3 +384,19 @@ footer salla-contacts a.s-contacts-item
   filter: none !important;
   perspective: none !important;
 }
+
+.viewed-section {
+  display: none !important;
+}
+
+div#whatsapp-up {
+    bottom: 140px !important;
+}
+
+salla-cashback-banner.hydrated {
+    display: none;
+}
+
+salla-bought-together.s-bought-together-entry.hydrated {
+    display: none;
+}

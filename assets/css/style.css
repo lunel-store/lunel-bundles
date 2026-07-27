@@ -390,9 +390,7 @@ footer salla-contacts a.s-contacts-item
 }
 
 div#whatsapp-up {
-    bottom: 140px !important;
-    left: 1.5rem !important;
-    right: unset !important;
+    bottom: 180px !important;
 }
 
 salla-cashback-banner.hydrated {

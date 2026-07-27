@@ -91,9 +91,7 @@ const updateWhatsappButtonForMainPage = () => {
   const whatsappButton = document.getElementById('whatsapp-up');
   if (!whatsappButton) return;
 
-  whatsappButton.style.right = '1.5rem';
-  whatsappButton.style.left = 'unset';
-  whatsappButton.style.bottom = '70px';
+  whatsappButton.style.setProperty('bottom', '70px', 'important');
 };
 
 document.addEventListener('DOMContentLoaded', updateWhatsappButtonForMainPage);

@@ -67,4 +67,91 @@ if (metadataName) {
 
   metadataName.prepend(p);
 }
+
+// Start: Homepage-only WhatsApp floating button position ------------------------
+const isMainPage = () => {
+  const path = (window.location && window.location.pathname) || '/';
+  const normalizedPath = path.replace(/\/+$/, '') || '/';
+
+  if (normalizedPath === '/') return true;
+
+  const body = document.body;
+  if (!body) return false;
+
+  return (
+    body.classList.contains('home') ||
+    body.classList.contains('homepage') ||
+    body.classList.contains('index')
+  );
+};
+
+const updateWhatsappButtonForMainPage = () => {
+  if (!isMainPage()) return;
+
+  const whatsappButton = document.getElementById('whatsapp-up');
+  if (!whatsappButton) return;
+
+  whatsappButton.style.right = '1.5rem';
+  whatsappButton.style.left = 'unset';
+  whatsappButton.style.bottom = '70px';
+};
+
+document.addEventListener('DOMContentLoaded', updateWhatsappButtonForMainPage);
+updateWhatsappButtonForMainPage();
+
+let whatsappRetryCount = 0;
+const whatsappRetryInterval = setInterval(() => {
+  updateWhatsappButtonForMainPage();
+  whatsappRetryCount += 1;
+
+  if (
+    document.getElementById('whatsapp-up') ||
+    whatsappRetryCount >= 20 ||
+    !isMainPage()
+  ) {
+    clearInterval(whatsappRetryInterval);
+  }
+}, 250);
+// End: Homepage-only WhatsApp floating button position ------------------------
+
+// Start: Force-hide/remove injected widgets ------------------------
+const FORCED_HIDDEN_SELECTORS = [
+  'salla-cashback-banner',
+  'salla-bought-together.s-bought-together-entry',
+];
+
+const forceHideOrRemoveElements = () => {
+  FORCED_HIDDEN_SELECTORS.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((node) => {
+      // Remove when possible to prevent re-layout or visibility toggles.
+      if (node && node.parentNode) {
+        node.parentNode.removeChild(node);
+        return;
+      }
+
+      // Fallback: hard-hide in case removal is not possible.
+      if (node && node.style) {
+        node.style.setProperty('display', 'none', 'important');
+        node.style.setProperty('visibility', 'hidden', 'important');
+      }
+    });
+  });
+};
+
+forceHideOrRemoveElements();
+document.addEventListener('DOMContentLoaded', forceHideOrRemoveElements);
+
+const forcedHideObserver = new MutationObserver(() => {
+  forceHideOrRemoveElements();
+});
+
+if (document.documentElement) {
+  forcedHideObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class', 'style'],
+  });
+}
+// End: Force-hide/remove injected widgets ------------------------
 })();

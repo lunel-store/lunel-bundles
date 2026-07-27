@@ -385,7 +385,7 @@ footer salla-contacts a.s-contacts-item
   perspective: none !important;
 }
 
-.viewed-section {
+#viewed-section {
   display: none !important;
 }
 

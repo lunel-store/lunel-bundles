@@ -113,80 +113,80 @@ const whatsappRetryInterval = setInterval(() => {
 // End: Homepage-only WhatsApp floating button position ------------------------
 
 // Start: Home slider video background ------------------------
-if (!window.__lunelHomeSliderVideoLoaded) {
-  window.__lunelHomeSliderVideoLoaded = true;
+// if (!window.__lunelHomeSliderVideoLoaded) {
+//   window.__lunelHomeSliderVideoLoaded = true;
 
-  const VIDEO_URL = 'https://cdn.imgchest.com/files/c922e568aed6.mp4';
+//   const VIDEO_URL = 'https://cdn.imgchest.com/files/c922e568aed6.mp4';
 
-  function applyVideoBackground() {
-    const slider = document.querySelector('#home-slider-0');
-    if (!slider) return;
+//   function applyVideoBackground() {
+//     const slider = document.querySelector('#home-slider-0');
+//     if (!slider) return;
 
-    // Check if video is already injected to avoid duplicates
-    if (slider.querySelector('.custom-bg-video')) return;
+//     // Check if video is already injected to avoid duplicates
+//     if (slider.querySelector('.custom-bg-video')) return;
 
-    // Ensure container styling allows background positioning
-    slider.style.position = 'relative';
-    slider.style.overflow = 'hidden';
-    slider.style.background = 'transparent';
+//     // Ensure container styling allows background positioning
+//     slider.style.position = 'relative';
+//     slider.style.overflow = 'hidden';
+//     slider.style.background = 'transparent';
 
-    // Create video element
-    const video = document.createElement('video');
-    video.className = 'custom-bg-video';
-    video.src = VIDEO_URL;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('autoplay', '');
+//     // Create video element
+//     const video = document.createElement('video');
+//     video.className = 'custom-bg-video';
+//     video.src = VIDEO_URL;
+//     video.autoplay = true;
+//     video.loop = true;
+//     video.muted = true;
+//     video.playsInline = true;
+//     video.setAttribute('muted', '');
+//     video.setAttribute('playsinline', '');
+//     video.setAttribute('autoplay', '');
 
-    // Force strict inline styles
-    Object.assign(video.style, {
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      zIndex: '0',
-      pointerEvents: 'none',
-    });
+//     // Force strict inline styles
+//     Object.assign(video.style, {
+//       position: 'absolute',
+//       top: '0',
+//       left: '0',
+//       width: '100%',
+//       height: '100%',
+//       objectFit: 'cover',
+//       zIndex: '0',
+//       pointerEvents: 'none',
+//     });
 
-    // Make sure existing content stays on top of the video
-    Array.from(slider.children).forEach((child) => {
-      if (child !== video) {
-        child.style.position = 'relative';
-        child.style.zIndex = '1';
-        child.style.background = 'transparent';
-      }
-    });
+//     // Make sure existing content stays on top of the video
+//     Array.from(slider.children).forEach((child) => {
+//       if (child !== video) {
+//         child.style.position = 'relative';
+//         child.style.zIndex = '1';
+//         child.style.background = 'transparent';
+//       }
+//     });
 
-    // Insert video as the first child of the slider
-    slider.insertBefore(video, slider.firstChild);
+//     // Insert video as the first child of the slider
+//     slider.insertBefore(video, slider.firstChild);
 
-    // Attempt play in case autoplay policy stalls it
-    video.play().catch((err) => console.log('Autoplay prevented:', err));
-  }
+//     // Attempt play in case autoplay policy stalls it
+//     video.play().catch((err) => console.log('Autoplay prevented:', err));
+//   }
 
-  // Run on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyVideoBackground);
-  } else {
-    applyVideoBackground();
-  }
+//   // Run on load
+//   if (document.readyState === 'loading') {
+//     document.addEventListener('DOMContentLoaded', applyVideoBackground);
+//   } else {
+//     applyVideoBackground();
+//   }
 
-  // Fallback observer in case #home-slider-0 is loaded dynamically
-  const observer = new MutationObserver(() => {
-    if (document.querySelector('#home-slider-0')) {
-      applyVideoBackground();
-    }
-  });
+//   // Fallback observer in case #home-slider-0 is loaded dynamically
+//   const observer = new MutationObserver(() => {
+//     if (document.querySelector('#home-slider-0')) {
+//       applyVideoBackground();
+//     }
+//   });
 
-  if (document.body) {
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-}
-// End: Home slider video background ------------------------
+//   if (document.body) {
+//     observer.observe(document.body, { childList: true, subtree: true });
+//   }
+// }
+// // End: Home slider video background ------------------------
 })();

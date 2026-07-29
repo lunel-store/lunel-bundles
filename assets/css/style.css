@@ -400,3 +400,7 @@ salla-cashback-banner.hydrated {
 salla-bought-together.s-bought-together-entry.hydrated {
     display: none;
 }
+
+.saji-title-ornament {
+  display: none !important;
+}

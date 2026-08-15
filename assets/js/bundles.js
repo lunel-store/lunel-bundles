@@ -109,7 +109,7 @@
 
   function buildRibbonSpan(ribbon) {
     if (!ribbon || !String(ribbon.text || '').trim()) return '';
-    const tone = /^(orange|green|blue)$/.test(ribbon.tone)
+    const tone = /^(orange|green|blue|gold)$/.test(ribbon.tone)
       ? ribbon.tone
       : 'green';
     const text = escapeHtml(ribbon.text);
@@ -131,18 +131,16 @@
   }
 
   function buildRibbonsBlock(bundle) {
+    const list = Array.isArray(bundle.ribbons)
+      ? bundle.ribbons
+      : [bundle.ribbon1, bundle.ribbon2, bundle.ribbon3];
+
     const parts = [];
-    if (bundle.ribbon1) {
-      const a = buildRibbonSpan(bundle.ribbon1);
-      if (a) parts.push(a);
-    }
-
-    if (bundle.ribbon2) {
-      const b = buildRibbonSpan(bundle.ribbon2);
-      if (b) parts.push(b);
-    }
-
-    if (!parts.length) return '';
+    list.forEach((ribbon) => {
+      if (!ribbon) return;
+      const span = buildRibbonSpan(ribbon);
+      if (span) parts.push(span);
+    });
 
     return parts.join('');
   }
@@ -156,6 +154,13 @@
     ) {
       return false;
     }
+    // Explicit allow-list of product pages this bundle appears on.
+    const showOn = bundle.show_on;
+    if (Array.isArray(showOn) && showOn.length) {
+      return showOn.some((id) => String(id) === String(currentProductId));
+    }
+
+    // Back-compat: single product page to hide this bundle on.
     const skip = bundle.skip_if_product;
     if (skip == null || skip === '') return true;
     return String(skip) !== String(currentProductId);

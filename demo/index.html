@@ -22,9 +22,9 @@
   <body>
     <h1>Local demo</h1>
     <p>
-      From the <strong>repository root</strong>, start a static server so paths
-      like <code>/p2094249977/</code> exist (opening <code>file://</code> will
-      not work).
+      Start the bundled static server from the <strong>repository root</strong>
+      (it serves the root so <code>/demo/…</code> and <code>/assets/…</code>
+      resolve just like production). Opening <code>file://</code> will not work.
     </p>
     <pre
       style="
@@ -36,28 +36,45 @@
       "
     >
 cd /path/to/lunel-bundles
-python3 -m http.server 8080</pre
+node demo/serve.js          # http://localhost:8080/demo/
+# or a custom port:  node demo/serve.js 3000</pre
     >
     <p>
-      The server’s working directory must be the <strong>repo root</strong> (not
-      <code>demo/</code>), otherwise <code>/demo/…</code> URLs will 404.
+      No dependencies required — it uses Node's built-in <code>http</code>
+      module. (If you prefer Python:
+      <code>python3 -m http.server 8080</code> from the repo root also works.)
     </p>
-    <p>Then open:</p>
+    <p>Then open each product page — every page shows exactly three bundles:</p>
     <ul>
       <li>
-        <a href="./store/p2094249977/"
-          >Product <code>2094249977</code> — 3 bundles</a
+        <a href="./store/p1904366049/"
+          >Product <code>1904366049</code> — مجموعة التفتيح والنضارة</a
         >
+        (bundles 1 · 2 · 3)
       </li>
       <li>
-        <a href="./store/p1904366049/"
-          >Product <code>1904366049</code> — 2 bundles</a
+        <a href="./store/p1521371906/"
+          >Product <code>1521371906</code> — مجموعة البشرة الحساسة</a
         >
+        (bundles 1 · 2 · 3)
+      </li>
+      <li>
+        <a href="./store/p2094249977/"
+          >Product <code>2094249977</code> — مجموعة لونيل المتكاملة</a
+        >
+        (bundles 1 · 2 · 3, three badges on card 3)
+      </li>
+      <li>
+        <a href="./store/p36309229/"
+          >Product <code>36309229</code> — مجموعة العناية الأساسية</a
+        >
+        (bundles 4 · 2 · 3)
       </li>
       <li>
         <a href="./store/p1644875761/"
-          >Product <code>1644875761</code> — 2 bundles</a
+          >Product <code>1644875761</code> — مجموعة الهالات والترطيب</a
         >
+        (bundles 5 · 2 · 3)
       </li>
       <li>
         <a href="./newcard.html">Standalone card mockup</a> (<a

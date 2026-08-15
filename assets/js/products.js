@@ -21,69 +21,148 @@
     return window.location.origin + prefix + '/' + p;
   }
 
+  // Resolve an asset path through the CDN url-builder when present, otherwise
+  // fall back to the relative path so the config still loads (mirrors the
+  // fallback in badge-icons.js). Without this, a missing LunelUrlBuilder would
+  // throw mid-object and leave LUNEL_PRODUCTS undefined.
+  function assetUrl(path) {
+    if (typeof window.LunelUrlBuilder === 'function') {
+      var url = window.LunelUrlBuilder(path);
+      if (url) return url;
+    }
+    return path;
+  }
+
+  // Product-page ids used by the show_on allow-lists below.
+  var P1_TATHEER = 1904366049; // مجموعة التفتيح والنضارة
+  var P2_HASSASA = 1521371906; // مجموعة البشرة الحساسة
+  var P3_MOTAKAMILA = 2094249977; // مجموعة لونيل المتكاملة
+  var P4_ASASIYA = 36309229; // مجموعة العناية الأساسية
+  var P5_HALAT = 1644875761; // مجموعة الهالات والترطيب
+
+  // Layout is three slots per product page:
+  //   slot 1 (order 1): bundle 1 by default, replaced by bundle 4 on its own
+  //                     page and bundle 5 on its own page (these never co-occur)
+  //   slot 2 (order 2): bundle 2 (always shown)
+  //   slot 3 (order 3): bundle 3 (always shown)
+  // `show_on` lists the product pages a bundle appears on; omit/null = every page.
   window.LUNEL_PRODUCTS = {
     1904366049: {
       id: 'bundle-1',
-      productId: 1904366049,
+      productId: P1_TATHEER,
       title: 'مجموعة التفتيح والنضارة',
       subtitle: 'مقشر + سيروم + وسائد قطنية',
       url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p1904366049'),
-      imageUrl: window.LunelUrlBuilder('assets/images/p1904366049.webp'),
+      imageUrl: assetUrl('assets/images/p1904366049.webp'),
       price: '350',
       salePrice: '229',
       discountText: 'وفر %35',
-      order: 2,
-      skip_if_product: 1644875761,
-      ribbon1: {
-        text: 'أفضل قيمة',
-        tone: 'blue',
-        type: 'money',
-        color: '#0095f6',
-      },
-    },
-    1644875761: {
-      id: 'bundle-2',
-      productId: 1644875761,
-      title: 'مجموعة الهالات والترطيب',
-      subtitle: 'كريم الهالات + مرطب',
-      url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p1644875761'),
-      imageUrl: window.LunelUrlBuilder('assets/images/p1644875761.webp'),
-      price: '250',
-      salePrice: '149',
-      discountText: 'وفر %40',
       order: 1,
-      skip_if_product: 1904366049,
-      ribbon1: {
-        text: 'وصل حديثًا',
-        tone: 'blue',
-        type: 'arrows',
-        color: '#0095f6',
-      },
+      show_on: [P1_TATHEER, P2_HASSASA, P3_MOTAKAMILA],
+      ribbons: [
+        {
+          text: 'أفضل قيمة',
+          tone: 'green',
+          type: 'best_value',
+          color: '#27b43e',
+        },
+      ],
+    },
+    1521371906: {
+      id: 'bundle-2',
+      productId: P2_HASSASA,
+      title: 'مجموعة البشرة الحساسة',
+      subtitle: 'غسول + سيروم + كريم الهالات + مرطب + واقي شمس',
+      url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p1521371906'),
+      imageUrl: assetUrl('assets/images/p1521371906.webp'),
+      price: '600',
+      salePrice: '349',
+      discountText: 'وفر %40',
+      order: 2,
+      show_on: null,
+      ribbons: [
+        {
+          text: 'وصل حديثًا',
+          tone: 'blue',
+          type: 'new_release',
+          color: '#0095f6',
+        },
+      ],
     },
     2094249977: {
       id: 'bundle-3',
-      productId: 2094249977,
+      productId: P3_MOTAKAMILA,
       title: 'مجموعة لونيل المتكاملة',
       subtitle: 'الروتين المتكامل للتفتيح والنضارة',
       url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p2094249977'),
-      imageUrl: window.LunelUrlBuilder('assets/images/p2094249977.webp'),
-      price: '600',
-      salePrice: '349',
-      discountText: 'وفر %42',
+      imageUrl: assetUrl('assets/images/p2094249977.webp'),
+      price: '900',
+      salePrice: '449',
+      discountText: 'وفر %50',
       order: 3,
-      skip_if_product: null,
-      ribbon1: {
-        text: 'الأكثر مبيعًا',
-        tone: 'green',
-        type: 'seal',
-        color: '#27b43e',
-      },
-      ribbon2: {
-        text: 'توصيل مجاني',
-        tone: 'orange',
-        type: 'free_delivery',
-        color: '#f24822',
-      },
+      show_on: null,
+      ribbons: [
+        {
+          text: 'الأكثر مبيعًا',
+          tone: 'blue',
+          type: 'number_1',
+          color: '#0095f6',
+        },
+        {
+          text: 'توصيل مجاني',
+          tone: 'orange',
+          type: 'free_delivery',
+          color: '#f24822',
+        },
+        {
+          text: 'هدايا إضافية',
+          tone: 'gold',
+          type: 'gifts',
+          color: '#a98924',
+        },
+      ],
+    },
+    36309229: {
+      id: 'bundle-4',
+      productId: P4_ASASIYA,
+      title: 'مجموعة العناية الأساسية',
+      subtitle: 'غسول + مرطب + واقي شمس',
+      url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p36309229'),
+      imageUrl: assetUrl('assets/images/p36309229.webp'),
+      price: '250',
+      salePrice: '179',
+      discountText: 'وفر %30',
+      order: 1,
+      show_on: [P4_ASASIYA],
+      ribbons: [
+        {
+          text: 'وصل حديثًا',
+          tone: 'blue',
+          type: 'new_release',
+          color: '#0095f6',
+        },
+      ],
+    },
+    1644875761: {
+      id: 'bundle-5',
+      productId: P5_HALAT,
+      title: 'مجموعة الهالات والترطيب',
+      subtitle: 'كريم الهالات + مرطب',
+      url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p1644875761'),
+      imageUrl: assetUrl('assets/images/p1644875761.webp'),
+      price: '210',
+      salePrice: '149',
+      discountText: 'وفر %30',
+      order: 1,
+      show_on: [P5_HALAT],
+      ribbons: [
+        {
+          text: 'أفضل قيمة',
+          tone: 'green',
+          type: 'best_value',
+          color: '#27b43e',
+        },
+      ],
     },
   };
 })();

@@ -97,6 +97,22 @@
   background: #27b43e !important;
 }
 
+#lunel-bundles-root .lunel-bundles__top_badge_item.gold-badge {
+  background: linear-gradient(135deg, #a98924 0%, #f8e29c 100%) !important;
+}
+
+#lunel-bundles-root .lunel-bundles__top_badge_item .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#lunel-bundles-root .lunel-bundles__top_badge_item .badge .lunel-bundles__badge-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
 #lunel-bundles-root .lunel-bundles__top_badge_item .lunel-bundles__badge-num {
   position: relative;
   z-index: 1;
@@ -125,6 +141,13 @@
   .lunel-bundles__top_badge_item.green-badge
   .lunel-bundles__badge-num {
   color: #27b43e;
+}
+
+#lunel-bundles-root .lunel-bundles__top_badge_item.gold-badge .badge,
+#lunel-bundles-root
+  .lunel-bundles__top_badge_item.gold-badge
+  .lunel-bundles__badge-num {
+  color: #a98924;
 }
 
 #lunel-bundles-root .lunel-bundles__product-details {

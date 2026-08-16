@@ -80,7 +80,7 @@
   /* gap between the two parts equals the pill padding, so the text ends up
      centered in the space left of the icon cell (symmetric on both sides). */
   gap: 5px;
-  padding: 5px;
+  padding: 4px;
   border-radius: 999px;
   white-space: nowrap;
   font-size: 14px;
@@ -95,6 +95,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0 !important;
 }
 
 /* Part 2: the remaining space, with the text centered inside it. */

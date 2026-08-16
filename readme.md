@@ -1,6 +1,6 @@
 ```
-git tag -a v8.2.1 -m "Release v8.2.1"
+git tag -a v8.3.7 -m "Release v8.3.7"
 ```
 ```
-git push origin v8.2.1
+git push origin v8.3.7
 ```

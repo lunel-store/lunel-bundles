@@ -127,7 +127,7 @@
       iconHtml = `<span class="badge" aria-hidden="true">${iconHtml}</span>`;
     }
 
-    return `<span class="lunel-bundles__top_badge_item ${tone}-badge">${iconHtml}${iconHtml ? ' ' : ''}${text}</span>`;
+    return `<span class="lunel-bundles__top_badge_item ${tone}-badge">${iconHtml}<span class="lunel-bundles__badge-text">${text}</span></span>`;
   }
 
   function buildRibbonsBlock(bundle) {

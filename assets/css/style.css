@@ -57,7 +57,7 @@
 
 #lunel-bundles-root .lunel-bundles__top_badges {
   position: absolute;
-  top: -12px;
+  top: -15px;
   left: 5%;
   transform: translateX(0%);
   color: #fff;
@@ -77,12 +77,31 @@
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
-  padding: 3px 12px;
-  border-radius: 15px;
+  /* gap between the two parts equals the pill padding, so the text ends up
+     centered in the space left of the icon cell (symmetric on both sides). */
+  gap: 5px;
+  padding: 5px;
+  border-radius: 999px;
   white-space: nowrap;
   font-size: 14px;
   line-height: 1.1;
+}
+
+/* Part 1: square icon cell (width = height). */
+#lunel-bundles-root .lunel-bundles__top_badge_item .badge {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Part 2: the remaining space, with the text centered inside it. */
+#lunel-bundles-root .lunel-bundles__top_badge_item .lunel-bundles__badge-text {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: 0 4px;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item.orange-badge {
@@ -101,16 +120,11 @@
   background: linear-gradient(135deg, #a98924 0%, #f8e29c 100%) !important;
 }
 
-#lunel-bundles-root .lunel-bundles__top_badge_item .badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Icon fills its square cell. */
 #lunel-bundles-root .lunel-bundles__top_badge_item .badge .lunel-bundles__badge-icon {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 100%;
+  height: 100%;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item .lunel-bundles__badge-num {

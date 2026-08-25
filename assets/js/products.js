@@ -79,7 +79,7 @@
         color: '#27b43e',
       },
       ribbon2: {
-        text: 'ينفد سريعاً',
+        text: 'ينفد سريعًا',
         tone: 'orange',
         type: 'flame',
         color: '#f24822',

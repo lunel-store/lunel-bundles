@@ -111,25 +111,26 @@ if (metadataName) {
   const positionAll = () => {
     const base = computeBase();
 
-    // WhatsApp button (right side) — skip while the theme is hiding it,
-    // so we don't fight its slide-in/out animation.
+    // Discount mini-popup (left side) sits on the BOTTOM row, just above
+    // the sticky bar (or the safe bottom offset).
+    const mini = document.querySelector('.mini-popup');
+    if (mini) {
+      mini.style.setProperty('bottom', base + 'px', 'important');
+    }
+
+    // WhatsApp button (right side) goes a full row ABOVE the mini-popup, so
+    // it is never overlapped by the wide pill. Skip while the theme is
+    // hiding it, so we don't fight its slide-in/out animation.
     const whatsapp = document.getElementById('whatsapp-up');
     const whatsappShown =
       whatsapp && window.getComputedStyle(whatsapp).opacity !== '0';
     if (whatsappShown) {
-      whatsapp.style.setProperty('bottom', base + 'px', 'important');
-    }
-
-    // Discount mini-popup (left side). It is a WIDE pill anchored to the
-    // left that would otherwise run under the WhatsApp button and collide
-    // with the scroll-to-top arrow. So place it a full ROW ABOVE the round
-    // buttons instead of sharing their row.
-    const mini = document.querySelector('.mini-popup');
-    if (mini) {
-      const buttonHeight =
-        (whatsapp && whatsapp.getBoundingClientRect().height) || 48;
-      const miniBottom = base + Math.round(buttonHeight) + GAP;
-      mini.style.setProperty('bottom', miniBottom + 'px', 'important');
+      let whatsappBottom = base;
+      if (mini) {
+        const miniHeight = Math.round(mini.getBoundingClientRect().height) || 40;
+        whatsappBottom = base + miniHeight + GAP;
+      }
+      whatsapp.style.setProperty('bottom', whatsappBottom + 'px', 'important');
     }
   };
 

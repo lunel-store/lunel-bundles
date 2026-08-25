@@ -96,7 +96,8 @@ if (metadataName) {
     return isShown ? rect : null;
   };
 
-  // The shared bottom offset (px) that both floating elements anchor to.
+  // The base bottom offset (px) for the round floating buttons row
+  // (WhatsApp on the right, theme scroll-to-top arrow on the left).
   const computeBase = () => {
     if (isProductPage()) {
       const rect = getVisibleStickyBar();
@@ -108,19 +109,27 @@ if (metadataName) {
   };
 
   const positionAll = () => {
-    const base = computeBase() + 'px';
+    const base = computeBase();
 
     // WhatsApp button (right side) — skip while the theme is hiding it,
     // so we don't fight its slide-in/out animation.
     const whatsapp = document.getElementById('whatsapp-up');
-    if (whatsapp && window.getComputedStyle(whatsapp).opacity !== '0') {
-      whatsapp.style.setProperty('bottom', base, 'important');
+    const whatsappShown =
+      whatsapp && window.getComputedStyle(whatsapp).opacity !== '0';
+    if (whatsappShown) {
+      whatsapp.style.setProperty('bottom', base + 'px', 'important');
     }
 
-    // Discount mini-popup (left side).
+    // Discount mini-popup (left side). It is a WIDE pill anchored to the
+    // left that would otherwise run under the WhatsApp button and collide
+    // with the scroll-to-top arrow. So place it a full ROW ABOVE the round
+    // buttons instead of sharing their row.
     const mini = document.querySelector('.mini-popup');
     if (mini) {
-      mini.style.setProperty('bottom', base, 'important');
+      const buttonHeight =
+        (whatsapp && whatsapp.getBoundingClientRect().height) || 48;
+      const miniBottom = base + Math.round(buttonHeight) + GAP;
+      mini.style.setProperty('bottom', miniBottom + 'px', 'important');
     }
   };
 

@@ -79,7 +79,7 @@
         color: '#27b43e',
       },
       ribbon2: {
-        text: 'توصيل مجاني',
+        text: 'ينفذ سريعًا',
         tone: 'orange',
         type: 'free_delivery',
         color: '#f24822',

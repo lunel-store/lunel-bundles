@@ -68,49 +68,82 @@ if (metadataName) {
   metadataName.prepend(p);
 }
 
-// Start: Homepage-only WhatsApp floating button position ------------------------
-const isMainPage = () => {
-  const path = (window.location && window.location.pathname) || '/';
-  const normalizedPath = path.replace(/\/+$/, '') || '/';
+// Start: Unified floating elements positioner ------------------------
+// Coordinates the discount mini-popup (left) and the WhatsApp button
+// (right) so they always sit at a consistent, un-cut-off height and rise
+// above the product sticky bar whenever it is visible.
+(function unifiedFloatingPositioner() {
+  const SAFE_BOTTOM = 24; // px gap from the viewport bottom edge
+  const GAP = 12; // px gap kept above the sticky bar when it is visible
 
-  if (normalizedPath === '/') return true;
+  const isProductPage = () =>
+    !!document.body && document.body.classList.contains('product-single');
 
-  const body = document.body;
-  if (!body) return false;
+  // Returns the sticky bar's bounding rect only when it is actually shown.
+  const getVisibleStickyBar = () => {
+    const bar = document.getElementById('sticky-bar');
+    if (!bar) return null;
 
-  return (
-    body.classList.contains('home') ||
-    body.classList.contains('homepage') ||
-    body.classList.contains('index')
-  );
-};
+    const style = window.getComputedStyle(bar);
+    const rect = bar.getBoundingClientRect();
+    const isShown =
+      style.opacity !== '0' &&
+      style.pointerEvents !== 'none' &&
+      style.visibility !== 'hidden' &&
+      rect.height > 0 &&
+      rect.top < window.innerHeight;
 
-const updateWhatsappButtonForMainPage = () => {
-  if (!isMainPage()) return;
+    return isShown ? rect : null;
+  };
 
-  const whatsappButton = document.getElementById('whatsapp-up');
-  if (!whatsappButton) return;
+  // The shared bottom offset (px) that both floating elements anchor to.
+  const computeBase = () => {
+    if (isProductPage()) {
+      const rect = getVisibleStickyBar();
+      if (rect) {
+        return Math.round(window.innerHeight - rect.top + GAP);
+      }
+    }
+    return SAFE_BOTTOM;
+  };
 
-  whatsappButton.style.setProperty('bottom', '70px', 'important');
-};
+  const positionAll = () => {
+    const base = computeBase() + 'px';
 
-document.addEventListener('DOMContentLoaded', updateWhatsappButtonForMainPage);
-updateWhatsappButtonForMainPage();
+    // WhatsApp button (right side) — skip while the theme is hiding it,
+    // so we don't fight its slide-in/out animation.
+    const whatsapp = document.getElementById('whatsapp-up');
+    if (whatsapp && window.getComputedStyle(whatsapp).opacity !== '0') {
+      whatsapp.style.setProperty('bottom', base, 'important');
+    }
 
-let whatsappRetryCount = 0;
-const whatsappRetryInterval = setInterval(() => {
-  updateWhatsappButtonForMainPage();
-  whatsappRetryCount += 1;
+    // Discount mini-popup (left side).
+    const mini = document.querySelector('.mini-popup');
+    if (mini) {
+      mini.style.setProperty('bottom', base, 'important');
+    }
+  };
 
-  if (
-    document.getElementById('whatsapp-up') ||
-    whatsappRetryCount >= 20 ||
-    !isMainPage()
-  ) {
-    clearInterval(whatsappRetryInterval);
-  }
-}, 250);
-// End: Homepage-only WhatsApp floating button position ------------------------
+  let ticking = false;
+  const schedule = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      positionAll();
+    });
+  };
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', positionAll);
+  document.addEventListener('DOMContentLoaded', positionAll);
+
+  // Keep in sync while elements animate in/out or hydrate late.
+  setInterval(positionAll, 400);
+  positionAll();
+})();
+// End: Unified floating elements positioner ------------------------
 
 // Start: Home slider video background ------------------------
 // if (!window.__lunelHomeSliderVideoLoaded) {

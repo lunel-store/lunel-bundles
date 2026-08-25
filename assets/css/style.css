@@ -389,9 +389,9 @@ footer salla-contacts a.s-contacts-item
   display: none !important;
 }
 
-div#whatsapp-up {
-    bottom: 180px !important;
-}
+/* WhatsApp button vertical position is coordinated in custom-script.js
+   (unified floating positioner) so it always clears the sticky bar and
+   never overlaps the discount mini-popup. Do not hard-code `bottom` here. */
 
 salla-cashback-banner.hydrated {
     display: none;

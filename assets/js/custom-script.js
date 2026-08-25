@@ -119,18 +119,19 @@ if (metadataName) {
     }
 
     // WhatsApp button (right side) goes a full row ABOVE the mini-popup, so
-    // it is never overlapped by the wide pill. Skip while the theme is
-    // hiding it, so we don't fight its slide-in/out animation.
+    // it is never overlapped by the wide pill. We always set its position
+    // (even mid fade-in): if we skip while opacity is briefly 0, the theme
+    // leaves it low and it ends up hidden BEHIND the pill.
     const whatsapp = document.getElementById('whatsapp-up');
-    const whatsappShown =
-      whatsapp && window.getComputedStyle(whatsapp).opacity !== '0';
-    if (whatsappShown) {
+    if (whatsapp) {
       let whatsappBottom = base;
       if (mini) {
         const miniHeight = Math.round(mini.getBoundingClientRect().height) || 40;
         whatsappBottom = base + miniHeight + GAP;
       }
       whatsapp.style.setProperty('bottom', whatsappBottom + 'px', 'important');
+      // Safety: keep WhatsApp stacked above the pill (pill uses z-index 22).
+      whatsapp.style.setProperty('z-index', '23', 'important');
     }
   };
 

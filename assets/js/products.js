@@ -79,9 +79,9 @@
         color: '#27b43e',
       },
       ribbon2: {
-        text: 'ينفذ سريعًا',
+        text: 'ينفد سريعاً',
         tone: 'orange',
-        type: 'free_delivery',
+        type: 'flame',
         color: '#f24822',
       },
     },

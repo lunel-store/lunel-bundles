@@ -59,18 +59,42 @@
   position: absolute;
   top: -15px;
   left: 5%;
-  transform: translateX(0%);
+  right: 5%;
   color: #fff;
   font-size: 11px;
   font-weight: bold;
   z-index: 10;
-  gap: 4px;
-  flex-wrap: nowrap;
-  display: inline-flex;
-  flex-direction: row;
+  /* Fixed 3 slots (left / center / right) so 1, 2 or 3 badges always land in
+     predictable spots instead of a gap-based row that crams into a corner
+     or overflows the card on narrow screens. Assignment is done below via
+     :nth-child()/:nth-last-child() so no JS is needed. */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  justify-content: center;
+  /* Layout must stay physically left-to-right regardless of the page's RTL
+     direction, so badge #1 is always the leftmost slot. */
+  direction: ltr;
   pointer-events: none;
+}
+
+/* Badge #1 is always in the left slot (also covers the single-badge case). */
+#lunel-bundles-root .lunel-bundles__top_badges > * {
+  direction: rtl; /* keep each badge's own Arabic text rendering correct */
+  grid-column: 1;
+  justify-self: start;
+}
+
+/* Badge #2 of 2, or badge #2 of 3: center slot. */
+#lunel-bundles-root .lunel-bundles__top_badges > *:nth-child(2):nth-last-child(1),
+#lunel-bundles-root .lunel-bundles__top_badges > *:nth-child(2):nth-last-child(2) {
+  grid-column: 2;
+  justify-self: center;
+}
+
+/* Badge #3 of 3: right slot. */
+#lunel-bundles-root .lunel-bundles__top_badges > *:nth-child(3):nth-last-child(1) {
+  grid-column: 3;
+  justify-self: end;
 }
 
 #lunel-bundles-root .lunel-bundles__top_badge_item {

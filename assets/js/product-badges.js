@@ -5,7 +5,11 @@
   window.__lunelProductBadgesLoaded = true;
 
   const BADGE_TARGET_LAYOUT_CLASSES =
-    'absolute right-1 top-1 z-20 flex items-center p-1 px-2 gap-1 fast-animate-pulse';
+    'lunel-product-badge absolute right-1 z-20 flex items-center p-1 px-2 gap-1 fast-animate-pulse';
+
+  // Vertical offset (px) between stacked badges, and the top offset of the first one.
+  const BADGE_STACK_START = 4;
+  const BADGE_STACK_GAP = 34;
 
   function applyBadgeLayoutClasses(el) {
     BADGE_TARGET_LAYOUT_CLASSES.split(/\s+/).forEach(function (cls) {
@@ -18,26 +22,28 @@
     return;
   }
 
-  function safeAppendSvg(container, svgString) {
-    if (!container || !svgString || typeof svgString !== 'string') return;
-    if (!/^\s*<svg[\s>]/i.test(svgString)) return;
+  function safeAppendIcon(container, iconHtml) {
+    if (!container || !iconHtml || typeof iconHtml !== 'string') return;
+    if (!/^\s*<(svg|img)[\s>]/i.test(iconHtml)) return;
 
     const tpl = document.createElement('template');
-    tpl.innerHTML = svgString.trim();
-    const svg = tpl.content.firstElementChild;
-    if (!svg || svg.tagName.toLowerCase() !== 'svg') return;
+    tpl.innerHTML = iconHtml.trim();
+    const icon = tpl.content.firstElementChild;
+    if (!icon) return;
+    const tag = icon.tagName.toLowerCase();
+    if (tag !== 'svg' && tag !== 'img') return;
 
-    const forbidden = svg.querySelectorAll('script, foreignObject');
+    const forbidden = icon.querySelectorAll('script, foreignObject');
     forbidden.forEach((n) => n.remove());
 
-    const all = svg.querySelectorAll('*');
+    const all = [icon, ...icon.querySelectorAll('*')];
     all.forEach((el) => {
       Array.from(el.attributes).forEach((attr) => {
         const name = attr.name.toLowerCase();
         const value = String(attr.value || '');
         if (name.startsWith('on')) el.removeAttribute(attr.name);
         if (
-          (name === 'href' || name === 'xlink:href') &&
+          (name === 'href' || name === 'xlink:href' || name === 'src') &&
           /^\s*javascript:/i.test(value)
         ) {
           el.removeAttribute(attr.name);
@@ -45,14 +51,16 @@
       });
     });
 
-    container.appendChild(svg);
+    container.appendChild(icon);
   }
 
-  function updateProductBadge({ card, target, ribbon }) {
-    if (!card || !target) return;
+  function updateProductBadge({ card, index, ribbon }) {
+    if (!card || index == null) return;
 
-    // Get container
-    let container = card.querySelector(`.${CSS.escape(target)}`);
+    // Get container for this stack slot
+    let container = card.querySelector(
+      `[data-lunel-badge-index="${index}"]`,
+    );
 
     // If no ribbon data, remove badge (if exists) and exit
     if (!ribbon) return removeProductBadgeTarget(container);
@@ -60,7 +68,7 @@
     // Create if not exists
     if (!container) {
       container = document.createElement('div');
-      container.className = target;
+      container.setAttribute('data-lunel-badge-index', String(index));
       applyBadgeLayoutClasses(container);
       const imageHost = card.querySelector('.product-entry__image');
       if (imageHost) {
@@ -72,6 +80,7 @@
 
     // If it was hidden previously, re-show it
     container.style.display = 'flex';
+    container.style.top = BADGE_STACK_START + index * BADGE_STACK_GAP + 'px';
 
     // Normalize animation classes even for pre-existing containers
     container.classList.remove('animate-pulse');
@@ -91,7 +100,7 @@
 
     // Replace content
     container.replaceChildren();
-    safeAppendSvg(container, svg);
+    safeAppendIcon(container, svg);
 
     const textEl = document.createElement('small');
     textEl.className =
@@ -102,51 +111,53 @@
     container.appendChild(textEl);
   }
 
-  function applyRibbons({ card, ribbon1, ribbon2 }) {
+  function applyRibbons({ card, ribbons }) {
     if (!card) return;
 
-    updateProductBadge({
-      card: card,
-      target: 'product-bestSellers',
-      ribbon: ribbon1,
+    var list = Array.isArray(ribbons) ? ribbons : [];
+
+    // Update/create a slot for every ribbon...
+    list.forEach(function (ribbon, index) {
+      updateProductBadge({ card: card, index: index, ribbon: ribbon });
     });
 
-    updateProductBadge({
-      card: card,
-      target: 'product-outWithin',
-      ribbon: ribbon2,
+    // ...and hide any leftover slots from a previous render with more ribbons.
+    var existing = card.querySelectorAll('[data-lunel-badge-index]');
+    existing.forEach(function (el) {
+      var idx = Number(el.getAttribute('data-lunel-badge-index'));
+      if (idx >= list.length) removeProductBadgeTarget(el);
     });
   }
 
   // home page
-  function featuredProdCards({ id, ribbon1, ribbon2 }) {
+  function featuredProdCards({ id, ribbons }) {
     const card = document.querySelector(
       `.featured-prod-cards salla-products-list custom-salla-product-card[data-product-id="${id}"]`,
     );
 
-    applyRibbons({ card, ribbon1, ribbon2 });
+    applyRibbons({ card, ribbons });
   }
 
   // Product List
-  function stationaryProducts({ id, ribbon1, ribbon2 }) {
+  function stationaryProducts({ id, ribbons }) {
     const card = document.querySelector(
       `section .stationary-products salla-products-list custom-salla-product-card[data-product-id="${id}"]`,
     );
 
-    applyRibbons({ card, ribbon1, ribbon2 });
+    applyRibbons({ card, ribbons });
   }
 
   // Product Page
-  function productPage({ id, ribbon1, ribbon2 }) {
+  function productPage({ id, ribbons }) {
     const card = document.querySelector(`salla-slider#details-slider-${id}`);
 
-    applyRibbons({ card, ribbon1, ribbon2 });
+    applyRibbons({ card, ribbons });
   }
 
-  function updateProductBadges({ id, ribbon1, ribbon2 }) {
-    featuredProdCards({ id, ribbon1, ribbon2 });
-    stationaryProducts({ id, ribbon1, ribbon2 });
-    productPage({ id, ribbon1, ribbon2 });
+  function updateProductBadges({ id, ribbons }) {
+    featuredProdCards({ id, ribbons });
+    stationaryProducts({ id, ribbons });
+    productPage({ id, ribbons });
   }
 
   function applyAllProductBadges() {
@@ -155,10 +166,12 @@
 
     Object.values(products).forEach((product) => {
       if (!product || !product.productId) return;
+      var ribbons = Array.isArray(product.ribbons)
+        ? product.ribbons
+        : [product.ribbon1, product.ribbon2].filter(Boolean);
       updateProductBadges({
         id: product.productId,
-        ribbon1: product.ribbon1,
-        ribbon2: product.ribbon2,
+        ribbons: ribbons,
       });
     });
     return true;

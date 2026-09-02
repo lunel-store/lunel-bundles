@@ -83,17 +83,31 @@ function createCloseButton(className, callback) {
     }, 400);
   }
   
+  // Keep in sync with the background-image url in the .popup-box rule
+  // (original/style.css). Used only to read the campaign image's real
+  // aspect ratio so the box is sized to match it instead of a hardcoded
+  // guess — swapping the campaign image just works without a CSS edit.
+  const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/dbbbd3c7b460.png';
+
   function createPopup() {
     if (document.querySelector('.popup-overlay')) return;
-  
+
     const overlay = document.createElement('div');
     overlay.className =
       'popup-overlay fixed inset-0 bg-black/50 flex justify-center items-center opacity-0 transition-opacity duration-300 z-[10000]';
-  
+
     const popup = document.createElement('div');
     popup.className =
-      'popup-box bg-white p-6 rounded-xl shadow-xl max-w-sm w-[90%] text-center transform scale-95 transition-transform duration-300 relative';
-  
+      'popup-box transform scale-95 transition-transform duration-300 relative';
+
+    const bgImg = new Image();
+    bgImg.onload = () => {
+      if (bgImg.naturalWidth && bgImg.naturalHeight) {
+        popup.style.aspectRatio = `${bgImg.naturalWidth} / ${bgImg.naturalHeight}`;
+      }
+    };
+    bgImg.src = POPUP_BG_IMAGE_URL;
+
     const closeBtn = createCloseButton('popup-close absolute top-3 right-4 text-2xl', () => {
       hidePopup(overlay);
       showMiniPopup();

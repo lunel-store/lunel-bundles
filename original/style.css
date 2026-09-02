@@ -193,25 +193,25 @@
   custom-salla-product-card {
       box-shadow: none !important;
   }
-  /* البوبب الرئيسي */
+  /* البوبب الرئيسي — الخلفية والأبعاد الفعلية يحددها الكود في script.js
+     (بناءً على أبعاد صورة الحملة الحقيقية)، حتى لا تُقص/تُمطط الصورة. */
   .popup-box {
-   background-image: url(https://cdn.imgchest.com/files/2524a8d4fbd9.png);
    background-size: cover;
+   background-position: center;
    color: #fff;
    padding:20px;
    border-radius: 12px;
    position: relative;
    width: 376px;
    max-width: 90vw;
+   max-height: 90vh;
    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
    text-align: center;
-   aspect-ratio: 4/4;
    display: flex;
    flex-direction: column;
    justify-content: end;
-   max-height: 386px;
   }
-  
+
   /* زر إغلاق */
   .popup-close {
     position: absolute;
@@ -221,38 +221,20 @@
     font-size: 20px;
      color: #75757a;
   }
-  
+
   /* نص البوبب */
-  
+
   .popup-text {
     font-size: 16px;
     margin-bottom: 15px;
   }
-  
+
   /* أزرار */
   .popup-box button {
-   
+
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-  }
-  .popup-box .get-code {
-    background-color: #fff;
-    color: #000;
-  }
-  .popup-box .cancel {
-    background-color: #ccc;
-    color: #000;
-  }
-  button.get-code {
-      width: 193px;
-      height: 48px;
-      font-size: 20px;
-      line-height: initial;
-  }
-  button.cancel {
-      width: 107px;
-      height: 48px;
   }
   /* ✅ شريط صغير أسفل المتصفح */
   .mini-popup {
@@ -913,23 +895,32 @@
     display: none !important;
 }
 
+/* عرض اليوم الوطني — التصميم الفعّال الوحيد لصندوق البوب-أب (لا يوجد تصميم
+   منافس آخر بعد الآن، راجع الأبعاد الديناميكية في script.js). */
 .popup-box {
-    background-image: url(https://cdn.imgchest.com/files/dbbbd3c7b460.png) !important;
+    background-image: url(https://cdn.imgchest.com/files/dbbbd3c7b460.png);
+}
+
+.popup-box .get-code,
+.popup-box .cancel {
+    font-size: 1.3rem;
+    position: relative;
+    top: -7px;
 }
 
 .popup-box .get-code {
-    background-color: unset !important;
-    color: white !important;
-    width: 60% !important;
-    height: 40px !important;
+    background-color: unset;
+    color: white;
+    width: 65%;
+    height: 40px;
 }
 
 .popup-box .cancel {
-    width: 25% !important;
-    height: 40px !important;
-    background-color: unset !important;
-    color: white !important;
-    text-decoration-line: unset !important;
+    width: 35%;
+    height: 40px;
+    background-color: unset;
+    color: white;
+    text-decoration-line: unset;
 }
 
 button.s-button-element.s-button-btn.s-button-solid.s-button-wide.s-button-primary.s-button-loader-after {
@@ -946,4 +937,8 @@ custom-salla-product-card.out-of-stock .product-form__body {
 .btn--add-to-cart [class*=s-button-text] {
     font-size: 1.2rem;
     line-height: 1.125rem;
+}
+
+.accordion-content img.field-image.mt-2 {
+  width: 100%;
 }

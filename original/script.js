@@ -1,5 +1,5 @@
 /* Add custom JS styles below */ 
-window.LUNEL_REPO_VERSION = 'v8.3.5.4';
+window.LUNEL_REPO_VERSION = 'v8.4.0';
 
 function createCloseButton(className, callback) {
     const closeBtn = document.createElement('button');
@@ -40,7 +40,8 @@ function createCloseButton(className, callback) {
     mini.style.zIndex = 22;
   
     const label = document.createElement('span');
-    label.textContent = 'احصل على خصم 10% على أول طلب';
+    // label.textContent = 'احصل على خصم 10% على أول طلب';
+    label.textContent = 'عرض اليوم الوطني لمدة 24 ساعة';
   
     const closeMini = createCloseButton('mini-close', () => hideMiniPopup(mini));
     closeMini.style.position = 'absolute';

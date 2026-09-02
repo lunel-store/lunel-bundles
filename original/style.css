@@ -937,3 +937,13 @@ button.s-button-element.s-button-btn.s-button-solid.s-button-wide.s-button-prima
     min-height: 55px !important;
     border-radius: 10px !important;
 }
+
+custom-salla-product-card.out-of-stock .product-form__body {
+    padding-bottom: 0 !important;
+}
+
+.product-entry.product-entry--vertical form.product-form.content-wrap
+.btn--add-to-cart [class*=s-button-text] {
+    font-size: 1.2rem;
+    line-height: 1.125rem;
+}

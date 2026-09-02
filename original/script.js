@@ -998,7 +998,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // End: LUNEL_BUNDLES -------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("square-photos-5");
+    const container = document.getElementById("square-photos-6");
     if (!container) return;
 
     const newUrl = "https://cdn.imgchest.com/files/c92ffa0a75de.png";

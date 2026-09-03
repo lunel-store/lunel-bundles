@@ -1,6 +1,8 @@
 /**
  * Lunel Bundles — single entry for external sites (e.g. jsDelivr).
- * Loads assets strictly in order: style.css → lunel-constants.js → config.js → bundles.js → product_badge.js
+ * Loads assets strictly in order: salla-custom.css → style.css →
+ * lunel-constants.js → badge-icons.js → products.js → bundles.js →
+ * product-badges.js → custom-script.js → out-of-stock.js
  */
 (function () {
   'use strict';
@@ -92,7 +94,10 @@
     });
   }
 
-  loadCss(urlFor('assets/css/style.css'))
+  loadCss(urlFor('assets/css/salla-custom.css'))
+    .then(function () {
+      return loadCss(urlFor('assets/css/style.css'));
+    })
     .then(function () {
       return loadScript(urlFor('assets/js/lunel-constants.js'));
     })

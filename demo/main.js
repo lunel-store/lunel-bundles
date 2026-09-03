@@ -94,7 +94,10 @@
     });
   }
 
-  loadCss(urlFor('assets/css/style.css'))
+  loadCss(urlFor('assets/css/salla-custom.css'))
+    .then(function () {
+      return loadCss(urlFor('assets/css/style.css'));
+    })
     .then(function () {
       return loadScript(urlFor('assets/js/lunel-constants.js'));
     })

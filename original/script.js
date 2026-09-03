@@ -84,7 +84,7 @@ function createCloseButton(className, callback) {
   }
   
   // Keep in sync with the background-image url in the .popup-box rule
-  // (original/style.css). Used only to read the campaign image's real
+  // (assets/css/salla-custom.css). Used only to read the campaign image's real
   // aspect ratio so the box is sized to match it instead of a hardcoded
   // guess — swapping the campaign image just works without a CSS edit.
   const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/dbbbd3c7b460.png';

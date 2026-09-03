@@ -103,10 +103,10 @@
       show_on: null,
       ribbons: [
         {
-          text: 'الأكثر مبيعًا',
-          tone: 'blue',
-          type: 'number_1',
-          color: '#0095f6',
+          text: 'هدايا إضافية',
+          tone: 'gold',
+          type: 'gifts',
+          color: '#a98924',
         },
         {
           text: 'توصيل مجاني',
@@ -115,10 +115,10 @@
           color: '#f24822',
         },
         {
-          text: 'هدايا إضافية',
-          tone: 'gold',
-          type: 'gifts',
-          color: '#a98924',
+          text: 'الأكثر مبيعًا',
+          tone: 'blue',
+          type: 'number_1',
+          color: '#0095f6',
         },
       ],
     },

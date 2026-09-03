@@ -366,10 +366,10 @@
        z-index: 10;
     }
   .featured_product_larg .discount-badge {
-      position: static;
-      font-size: 1rem;
-      line-height: inherit;
-      padding: 6px;
+      position: static !important;
+      font-size: 1rem !important;
+      line-height: inherit !important;
+      padding: 6px !important;
     }
   /* font-size is owned by assets/css/style.css (body .featured_product_larg
      a.product-entry__title) — not repeated here to avoid the two rules
@@ -379,8 +379,8 @@
       letter-spacing: normal !important;
   }
   .featured_product_larg p.product-entry__subtitle {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 14px !important;
+      font-weight: 400 !important;
   }
   .product_page .product-entry__sub-title {
       font-size: 15px;
@@ -429,9 +429,9 @@
       font-size: 1.25rem;
   }
   .featured_product_larg strong.sale-price.total-price {
-      font-size: 1.4rem;
-      font-weight: 400;
-      margin-bottom: 21px;
+      font-size: 1.4rem !important;
+      font-weight: 400 !important;
+      margin-bottom: 21px !important;
   }
   .product_page .total-price-single {
       font-size: 30px;
@@ -441,7 +441,11 @@
   /* font-size is owned by assets/css/style.css (.product-entry__price div
      span.regular-price) — not repeated here to avoid the two rules fighting
      over specificity. */
-  .featured_product_larg span.regular-price.before-price, .product_page .before-price-single {
+  .featured_product_larg span.regular-price.before-price {
+      font-weight: 400 !important;
+      margin-bottom: 21px !important;
+  }
+  .product_page .before-price-single {
       font-weight: 400;
       margin-bottom: 21px;
   }
@@ -450,9 +454,9 @@
   }
    
   .featured_product_larg .product_addCart_mob{
-      width: 90%;
-      border-radius: 10px;
-      margin: 0 auto;
+      width: 90% !important;
+      border-radius: 10px !important;
+      margin: 0 auto !important;
   }
   .product-outWithin,.product-bestSellers{
    width: 104.49px;
@@ -526,7 +530,7 @@
       align-items: start;
   }
   .featured-prod-cards .product-entry__price{
-     align-items: center;
+     align-items: center !important;
   }
   
   .content-wrap .p-3.pt-0.gap-2.flex.items-center.justify-between {

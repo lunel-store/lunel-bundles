@@ -1,8 +1,10 @@
 /**
  * Lunel Bundles — single entry for external sites (e.g. jsDelivr).
- * Loads assets strictly in order: salla-custom.css → style.css →
+ * Loads the built bundle (dist/lunel-bundle.min.css + dist/lunel-bundle.min.js),
+ * which concatenates and minifies, in order: salla-custom.css → style.css →
  * lunel-constants.js → badge-icons.js → products.js → bundles.js →
  * product-badges.js → custom-script.js → out-of-stock.js
+ * Run `npm run build` after editing any file under assets/ to regenerate it.
  */
 (function () {
   'use strict';
@@ -94,30 +96,9 @@
     });
   }
 
-  loadCss(urlFor('assets/css/salla-custom.css'))
+  loadCss(urlFor('dist/lunel-bundle.min.css'))
     .then(function () {
-      return loadCss(urlFor('assets/css/style.css'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/lunel-constants.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/badge-icons.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/products.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/bundles.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/product-badges.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/custom-script.js'));
-    })
-    .then(function () {
-      return loadScript(urlFor('assets/js/out-of-stock.js'));
+      return loadScript(urlFor('dist/lunel-bundle.min.js'));
     })
     .catch(function (err) {
       if (window.console && console.error) {

@@ -1,5 +1,10 @@
 /* Add custom CSS styles below */
 
+/*====== Lunel — product-badges.js ribbon pills (product/home/category cards) =*/
+.lunel-product-badge {
+  min-width: 95px;
+}
+
 /*====== Lunel — product bundles (aligned with demo/newcard.html) ============*/
 
 #lunel-bundles-root {
@@ -71,15 +76,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  /* Layout must stay physically left-to-right regardless of the page's RTL
-     direction, so badge #1 is always the leftmost slot. */
-  direction: ltr;
   pointer-events: none;
 }
 
-/* Badge #1 is always in the left slot (also covers the single-badge case). */
+/* Badge #1 stays in the page's natural (RTL) start slot — also covers the
+   single-badge case. */
 #lunel-bundles-root .lunel-bundles__top_badges > * {
-  direction: rtl; /* keep each badge's own Arabic text rendering correct */
   grid-column: 1;
   justify-self: start;
 }

@@ -76,12 +76,17 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  /* Badge order must stay physically left-to-right (badge #1 = left slot,
+     last badge = right slot) regardless of the page's RTL direction —
+     under inherited RTL, grid column 1 / justify-self:start resolve to the
+     right edge, which puts the LAST badge on the left instead. */
+  direction: ltr;
   pointer-events: none;
 }
 
-/* Badge #1 stays in the page's natural (RTL) start slot — also covers the
-   single-badge case. */
+/* Badge #1 is always in the left slot (also covers the single-badge case). */
 #lunel-bundles-root .lunel-bundles__top_badges > * {
+  direction: rtl; /* keep each badge's own Arabic text rendering correct */
   grid-column: 1;
   justify-self: start;
 }
@@ -294,6 +299,8 @@
   background: #f9f9f9 !important;
 }
 
+/* Source of truth for this title's font-size — original/style.css no longer
+   sets it, to avoid the two rules fighting over specificity. */
 body .featured_product_larg a.product-entry__title {
   font-size: 1.1rem !important;
 }
@@ -345,8 +352,11 @@ div#metadata-name {
   }
 }
 
+/* Source of truth for this price's font-size — original/style.css no longer
+   sets it for .featured_product_larg, to avoid the two rules fighting over
+   specificity. */
 .product-entry__price div span.regular-price {
-    font-size: 1.10rem !important;
+    font-size: 1rem !important;
 }
 
 custom-salla-product-card form .product_addCart_mob salla-add-product-button div salla-button button {

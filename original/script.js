@@ -379,7 +379,7 @@ function createCloseButton(className, callback) {
         const createDiscountBadge = () => {
           const badge = document.createElement('span');
           badge.className = 'discount-badge';
-          badge.textContent = `وفّري ${discountPercent}%`;
+          badge.textContent = `وفّر ${discountPercent}%`;
           badge.style.cssText = `
             background: #ffff3b;
             color: #f24822;
@@ -419,9 +419,9 @@ function createCloseButton(className, callback) {
             // حدّث النص لو تغيرت النسبة
             const existing = extra.querySelector('.discount-badge');
             if (existing && existing.textContent && existing.textContent.indexOf('%') === -1) {
-              existing.textContent = `وفّري ${discountPercent}%`;
+              existing.textContent = `وفّر ${discountPercent}%`;
             } else if (existing) {
-              existing.textContent = `وفّري ${discountPercent}%`;
+              existing.textContent = `وفّر ${discountPercent}%`;
             }
           }
   
@@ -479,7 +479,7 @@ function createCloseButton(className, callback) {
           } else {
             // لو موجود حدّث النص فقط
             const existing = imageEl.querySelector('.discount-badge');
-            if (existing) existing.textContent = `وفّري ${discountPercent}%`;
+            if (existing) existing.textContent = `وفّر ${discountPercent}%`;
           }
         }
       });
@@ -673,7 +673,7 @@ function createCloseButton(className, callback) {
     // إنشاء شارة الخصم
     const badge = document.createElement('span');
     badge.className = 'discount-badge-single';
-    badge.textContent = `وفّري ${discountPercent}%`;
+    badge.textContent = `وفّر ${discountPercent}%`;
     badge.style.cssText = `
       background: #ffff3b;
       color: #f24822;

@@ -371,18 +371,23 @@
       line-height: inherit;
       padding: 6px;
     }
+  /* font-size is owned by assets/css/style.css (body .featured_product_larg
+     a.product-entry__title) — not repeated here to avoid the two rules
+     fighting over specificity. */
   .featured_product_larg a.product-entry__title {
-       font-size: 1.6rem !important;
-      line-height: 2.25rem !important;
       font-weight: 900 !important;
       letter-spacing: normal !important;
   }
-  .featured_product_larg p.product-entry__subtitle,
-   .product_page .product-entry__sub-title{
+  .featured_product_larg p.product-entry__subtitle {
+      font-size: 14px;
+      font-weight: 400;
+  }
+  .product_page .product-entry__sub-title {
       font-size: 15px;
       font-weight: 400;
-  } 
-    
+  }
+
+
   .s-block--influencer-videos .swiper-slide {
       border: 1px solid #e3e0db;
   }
@@ -423,13 +428,20 @@
   strong.text-sm.lg\:text-base.font-bold.text-\[var\(--product-price-color\)\].total-price {
       font-size: 1.25rem;
   }
-  .featured_product_larg strong.sale-price.total-price, .product_page .total-price-single{
-      font-size: 30px; 
+  .featured_product_larg strong.sale-price.total-price {
+      font-size: 1.4rem;
       font-weight: 400;
       margin-bottom: 21px;
   }
-  .featured_product_larg span.regular-price.before-price, .product_page .before-price-single { 
-      font-size: 25px;
+  .product_page .total-price-single {
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 21px;
+  }
+  /* font-size is owned by assets/css/style.css (.product-entry__price div
+     span.regular-price) — not repeated here to avoid the two rules fighting
+     over specificity. */
+  .featured_product_larg span.regular-price.before-price, .product_page .before-price-single {
       font-weight: 400;
       margin-bottom: 21px;
   }

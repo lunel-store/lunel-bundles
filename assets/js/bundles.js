@@ -193,12 +193,12 @@
 
         const price = String(bundle.price || '').trim();
         const priceBlock = price
-          ? `<span class="before-price-single line-through decoration-[var(--product-price-offer)] font-normal text-[var(--product-price-offer)]" style="font-size: 15px !important;">${escapeHtml(price)} <i class="sicon-sar"></i></span>`
+          ? `<span class="lunel-bundles__price--before line-through decoration-[var(--product-price-offer)] font-normal text-[var(--product-price-offer)]" style="font-size: 15px !important;">${escapeHtml(price)} <i class="sicon-sar"></i></span>`
           : '';
 
         const salePrice = String(bundle.salePrice || '').trim();
         const salePriceBlock = salePrice
-          ? `<strong class="total-price-single text-[var(--product-price-color)] font-bold text-xl inline-block" style="font-size: 20px !important;margin: 0px 8px;">${escapeHtml(salePrice)} <i class="sicon-sar"></i></strong>`
+          ? `<strong class="lunel-bundles__price text-[var(--product-price-color)] font-bold text-xl inline-block" style="font-size: 20px !important;margin: 0px 8px;">${escapeHtml(salePrice)} <i class="sicon-sar"></i></strong>`
           : '';
 
         const pricesBlock =

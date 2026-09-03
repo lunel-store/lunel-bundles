@@ -1,5 +1,5 @@
 /* Add custom JS styles below */ 
-window.LUNEL_REPO_VERSION = 'v8.4.1';
+window.LUNEL_REPO_VERSION = 'v8.4.5.1';
 
 function createCloseButton(className, callback) {
     const closeBtn = document.createElement('button');

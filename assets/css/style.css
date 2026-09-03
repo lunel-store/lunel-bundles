@@ -302,7 +302,7 @@
 /* Source of truth for this title's font-size — original/style.css no longer
    sets it, to avoid the two rules fighting over specificity. */
 body .featured_product_larg a.product-entry__title {
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
 }
 
 .saji-block-titles h2.saji-default-title {

@@ -1,5 +1,19 @@
-/* Add custom JS styles below */ 
-window.LUNEL_REPO_VERSION = 'v8.4.5.1';
+/* Add custom JS styles below */
+window.LUNEL_REPO_VERSION = 'v8.4.5.2';
+
+console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
+
+(function () {
+  var GUARDED_SELECTORS = ['.total-price-single', '.before-price-single'];
+  var nativeQuerySelectorAll = Document.prototype.querySelectorAll;
+  
+  Document.prototype.querySelectorAll = function (selector) {
+    if (GUARDED_SELECTORS.indexOf(selector) !== -1) {
+      return [];
+    }
+    return nativeQuerySelectorAll.call(this, selector);
+  };
+})();
 
 function createCloseButton(className, callback) {
     const closeBtn = document.createElement('button');

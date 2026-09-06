@@ -129,7 +129,7 @@
       subtitle: 'غسول + مرطب + واقي شمس',
       url: productHrefFromPath('lunel-refund-return-guarantee-3x3/p36309229'),
       imageUrl: assetUrl('assets/images/p36309229.webp'),
-      price: '250',
+      price: '350',
       salePrice: '196',
       discountText: 'وفر %45',
       order: 1,

@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.5.2';
+window.LUNEL_REPO_VERSION = 'v8.4.5.3';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 
@@ -995,7 +995,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   'use strict';
 
-  window.OUT_OF_STOCK_PRODUCTS = [];
+  window.OUT_OF_STOCK_PRODUCTS = ["2094249977", "1521371906"];
 
   const LUNEL_REPO_VERSION = window.LUNEL_REPO_VERSION || 'main';
 
@@ -1026,7 +1026,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // End: LUNEL_BUNDLES -------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("square-photos-6");
+    const container = document.getElementById("square-photos-7");
     if (!container) return;
 
     const newUrl = "https://cdn.imgchest.com/files/c92ffa0a75de.png";

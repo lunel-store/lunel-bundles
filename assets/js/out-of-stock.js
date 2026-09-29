@@ -8,37 +8,26 @@
     ? window.OUT_OF_STOCK_PRODUCTS
     : [];
 
-  var products = window.LUNEL_PRODUCTS || {};
+  // Off by default: set window.OOS_HIDE_IN_FEATURED = true to enable.
+  if (window.OOS_HIDE_IN_FEATURED !== true) return;
 
-  function removeById(id) {
-    var el = document.getElementById(id);
-    if (el && el.parentNode) el.parentNode.removeChild(el);
-  }
+  var oos = window.OUT_OF_STOCK_PRODUCTS;
+  if (!oos.length) return;
 
-  function runRules() {
-    var oos = window.OUT_OF_STOCK_PRODUCTS;
-    var oosCount = Array.isArray(oos) ? oos.length : 0;
-    var productsCount = products ? Object.keys(products).length : 0;
+  // Hide out-of-stock product cards inside featured-prod-cards-* sections.
+  // A stylesheet rule (rather than removing nodes) also covers cards that
+  // Salla renders after this script runs. Sections stay even when emptied.
+  var selectors = oos.map(function (id) {
+    var safeId = String(id).replace(/["\\]/g, '');
+    return (
+      '[id^="featured-prod-cards-"] custom-salla-product-card[data-product-id="' +
+      safeId +
+      '"]'
+    );
+  });
 
-    if (productsCount > 0 && oosCount === productsCount) {
-      removeById('featured-prod-cards-1');
-      removeById('featured-prod-cards-2');
-      return;
-    }
-
-    if (
-      Array.isArray(oos) &&
-      oos.some(function (id) {
-        return String(id) === '2094249977';
-      })
-    ) {
-      removeById('featured-prod-cards-2');
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runRules, { once: true });
-  } else {
-    runRules();
-  }
+  var style = document.createElement('style');
+  style.id = 'lunel-out-of-stock-style';
+  style.textContent = selectors.join(',\n') + ' { display: none !important; }';
+  (document.head || document.documentElement).appendChild(style);
 })();

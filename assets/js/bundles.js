@@ -145,15 +145,15 @@
     return parts.join('');
   }
 
-  function shouldShowBundle(bundle, currentProductId) {
+  function isOutOfStock(bundle) {
     const oos = window.OUT_OF_STOCK_PRODUCTS;
-    if (
+    return (
       Array.isArray(oos) &&
-      oos.length < 3 &&
       oos.some((id) => String(id) === String(bundle.productId))
-    ) {
-      return false;
-    }
+    );
+  }
+
+  function shouldShowBundle(bundle, currentProductId) {
     // Explicit allow-list of product pages this bundle appears on.
     const showOn = bundle.show_on;
     if (Array.isArray(showOn) && showOn.length) {
@@ -167,9 +167,17 @@
   }
 
   function buildBundlesHTML(currentProductId) {
-    const bundlesToShow = Object.values(BUNDLES_PRODUCTS)
+    let bundlesToShow = Object.values(BUNDLES_PRODUCTS)
       .filter((bundle) => shouldShowBundle(bundle, currentProductId))
       .sort((a, b) => a.order - b.order);
+
+    // Out-of-stock bundles are hidden per page; if every bundle on the page
+    // is out of stock, they all stay visible (unless configured otherwise).
+    if (window.OOS_HIDE_IN_BUNDLES !== false) {
+      const inStock = bundlesToShow.filter((bundle) => !isOutOfStock(bundle));
+      const showAllIfAllOos = window.OOS_SHOW_ALL_BUNDLES_IF_ALL_OOS !== false;
+      if (inStock.length || !showAllIfAllOos) bundlesToShow = inStock;
+    }
 
     if (!bundlesToShow.length) return '';
 

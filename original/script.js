@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.5.3';
+window.LUNEL_REPO_VERSION = 'v8.4.5.4';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 
@@ -996,6 +996,9 @@ document.addEventListener("DOMContentLoaded", function () {
   'use strict';
 
   window.OUT_OF_STOCK_PRODUCTS = ["2094249977", "1521371906"];
+  window.OOS_HIDE_IN_BUNDLES = true; // hide out-of-stock bundles from the bundle cards
+  window.OOS_HIDE_IN_FEATURED = false; // hide out-of-stock products from featured-prod-cards-*
+  window.OOS_SHOW_ALL_BUNDLES_IF_ALL_OOS = true; // show every bundle when all on the page are out of stock
 
   const LUNEL_REPO_VERSION = window.LUNEL_REPO_VERSION || 'main';
 

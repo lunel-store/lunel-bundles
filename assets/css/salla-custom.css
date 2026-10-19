@@ -918,22 +918,25 @@
 .popup-box .get-code,
 .popup-box .cancel {
     font-size: 1.3rem;
+    font-weight: 700;
     position: relative;
     top: -7px;
+    border-radius: 8px;
 }
 
 .popup-box .get-code {
-    background-color: unset;
-    color: white;
+    background-color: #ffffff;
+    color: #111111;
     width: 65%;
-    height: 40px;
+    height: 44px;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
 }
 
 .popup-box .cancel {
     width: 35%;
-    height: 40px;
-    background-color: unset;
-    color: white;
+    height: 44px;
+    background-color: #f2f2f2;
+    color: #8a8a8a;
     text-decoration-line: unset;
 }
 

@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.6';
+window.LUNEL_REPO_VERSION = 'v8.4.6.1';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 

@@ -917,8 +917,9 @@
 
 .popup-box .get-code,
 .popup-box .cancel {
+    font-family: 'The Year of The Camel', sans-serif !important;
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: 900;
     position: relative;
     top: -7px;
     border-radius: 8px;

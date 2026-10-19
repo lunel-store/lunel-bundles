@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.5.5';
+window.LUNEL_REPO_VERSION = 'v8.4.6';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 
@@ -144,15 +144,15 @@ function createCloseButton(className, callback) {
   
     const getCodeBtn = createButton(
     'get-code bg-[#d07779] text-white px-4 py-2 rounded-md',
-    'انسخ كود "وطني"',
+    'انسخ الكود N10',
     () => {
-      const code = 'وطني';
+      const code = 'N10';
   
       navigator.clipboard.writeText(code).then(() => {
         // اختياري: تغيير النص مؤقتًا للتأكيد
         getCodeBtn.textContent = 'تم نسخ الكود';
         setTimeout(() => {
-          getCodeBtn.textContent = 'انسخ كود "وطني"';
+          getCodeBtn.textContent = 'انسخ الكود N10';
         }, 2000);
       }).catch(() => {
         alert('حدث خطأ أثناء نسخ الكود');

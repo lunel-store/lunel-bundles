@@ -911,10 +911,8 @@
     display: none !important;
 }
 
-/* عرض اليوم الوطني — التصميم الفعّال الوحيد لصندوق البوب-أب (لا يوجد تصميم
-   منافس آخر بعد الآن، راجع الأبعاد الديناميكية في script.js). */
 .popup-box {
-    background-image: url(https://cdn.imgchest.com/files/dbbbd3c7b460.png);
+    background-image: url(https://cdn.imgchest.com/files/2524a8d4fbd9.png);
 }
 
 .popup-box .get-code,

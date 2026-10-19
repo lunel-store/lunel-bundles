@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.5.4';
+window.LUNEL_REPO_VERSION = 'v8.4.5.5';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 
@@ -54,8 +54,8 @@ function createCloseButton(className, callback) {
     mini.style.zIndex = 22;
   
     const label = document.createElement('span');
-    // label.textContent = 'احصل على خصم 10% على أول طلب';
-    label.textContent = 'عرض اليوم الوطني لمدة 24 ساعة';
+    label.textContent = 'احصل على خصم 10% على أول طلب';
+    // label.textContent = 'عرض اليوم الوطني لمدة 24 ساعة';
   
     const closeMini = createCloseButton('mini-close', () => hideMiniPopup(mini));
     closeMini.style.position = 'absolute';
@@ -101,7 +101,7 @@ function createCloseButton(className, callback) {
   // (assets/css/salla-custom.css). Used only to read the campaign image's real
   // aspect ratio so the box is sized to match it instead of a hardcoded
   // guess — swapping the campaign image just works without a CSS edit.
-  const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/dbbbd3c7b460.png';
+  const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/2524a8d4fbd9.png';
 
   function createPopup() {
     if (document.querySelector('.popup-overlay')) return;
@@ -995,10 +995,10 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   'use strict';
 
-  window.OUT_OF_STOCK_PRODUCTS = ["2094249977", "1521371906"];
+  window.OUT_OF_STOCK_PRODUCTS = ["2094249977", "1521371906", "1904366049"];
   window.OOS_HIDE_IN_BUNDLES = true; // hide out-of-stock bundles from the bundle cards
   window.OOS_HIDE_IN_FEATURED = false; // hide out-of-stock products from featured-prod-cards-*
-  window.OOS_SHOW_ALL_BUNDLES_IF_ALL_OOS = true; // show every bundle when all on the page are out of stock
+  window.OOS_SHOW_ALL_BUNDLES_IF_ALL_OOS = false; // show every bundle when all on the page are out of stock
 
   const LUNEL_REPO_VERSION = window.LUNEL_REPO_VERSION || 'main';
 

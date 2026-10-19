@@ -929,13 +929,13 @@
     background-color: #ffffff;
     color: #111111;
     width: 65%;
-    height: 44px;
+    height: 48px;
     box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
 }
 
 .popup-box .cancel {
     width: 35%;
-    height: 44px;
+    height: 48px;
     background-color: #f2f2f2;
     color: #8a8a8a;
     text-decoration-line: unset;

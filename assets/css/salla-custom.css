@@ -912,7 +912,7 @@
 }
 
 .popup-box {
-    background-image: url(https://cdn.imgchest.com/files/2524a8d4fbd9.png);
+    background-image: url(https://cdn.imgchest.com/files/cfa2f6a516d6.png);
 }
 
 .popup-box .get-code,
@@ -922,7 +922,9 @@
     font-weight: 900;
     position: relative;
     top: -7px;
+    border: 1.5px solid #222222;
     border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .popup-box .get-code {
@@ -930,7 +932,6 @@
     color: #111111;
     width: 65%;
     height: 48px;
-    box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
 }
 
 .popup-box .cancel {

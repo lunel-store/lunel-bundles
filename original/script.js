@@ -1,5 +1,5 @@
 /* Add custom JS styles below */
-window.LUNEL_REPO_VERSION = 'v8.4.6.3';
+window.LUNEL_REPO_VERSION = 'v8.4.7';
 
 console.log('[Lunel] script.js loaded, version', window.LUNEL_REPO_VERSION);
 
@@ -101,7 +101,7 @@ function createCloseButton(className, callback) {
   // (assets/css/salla-custom.css). Used only to read the campaign image's real
   // aspect ratio so the box is sized to match it instead of a hardcoded
   // guess — swapping the campaign image just works without a CSS edit.
-  const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/2524a8d4fbd9.png';
+  const POPUP_BG_IMAGE_URL = 'https://cdn.imgchest.com/files/cfa2f6a516d6.png';
 
   function createPopup() {
     if (document.querySelector('.popup-overlay')) return;
@@ -144,15 +144,15 @@ function createCloseButton(className, callback) {
   
     const getCodeBtn = createButton(
     'get-code bg-[#d07779] text-white px-4 py-2 rounded-md',
-    'انسخ الكود N10',
+    'انسخ الكود: WF10',
     () => {
-      const code = 'N10';
+      const code = 'WF10';
   
       navigator.clipboard.writeText(code).then(() => {
         // اختياري: تغيير النص مؤقتًا للتأكيد
         getCodeBtn.textContent = 'تم نسخ الكود';
         setTimeout(() => {
-          getCodeBtn.textContent = 'انسخ الكود N10';
+          getCodeBtn.textContent = 'انسخ الكود: WF10';
         }, 2000);
       }).catch(() => {
         alert('حدث خطأ أثناء نسخ الكود');

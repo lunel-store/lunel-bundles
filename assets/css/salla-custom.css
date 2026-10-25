@@ -33,6 +33,12 @@
   .header-components{
     padding: 20px 0;
   }
+  /* Theme scroll style "default" forces a solid --header-bg on the sticky header */
+  html #header[data-saji-scroll-nav].is-saji-sticky .header-components {
+    background: color-mix(in srgb, var(--header-bg) 70%, transparent) !important;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
   span#progress-value {
       width: 2.3rem;
       height: 2.3rem;

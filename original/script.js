@@ -969,28 +969,6 @@ function createCloseButton(className, callback) {
   
   observer.observe(document.body, { childList: true, subtree: true });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("square-photos-4");
-    if (!container) return;
-
-    const newUrl = "https://cdn.imgchest.com/files/791d24140f26.png";
-
-    const img = container.querySelector("img");
-    const source = container.querySelector("source");
-
-    if (img) {
-        img.src = newUrl;
-        img.setAttribute("data-src", newUrl);
-        img.setAttribute("srcset", newUrl);
-        img.classList.remove("lazy");
-    }
-
-    if (source) {
-        source.srcset = newUrl;
-        source.setAttribute("data-srcset", newUrl);
-    }
-});
-
 // Start: LUNEL_BUNDLES -------------------
 (function () {
   'use strict';
@@ -1027,28 +1005,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.head.appendChild(script);
 })();
 // End: LUNEL_BUNDLES -------------------
-
-document.addEventListener("DOMContentLoaded", function () {
-    const container = document.getElementById("square-photos-8");
-    if (!container) return;
-
-    const newUrl = "https://cdn.imgchest.com/files/c92ffa0a75de.png";
-
-    const img = container.querySelector("img");
-    const source = container.querySelector("source");
-
-    if (img) {
-        img.src = newUrl;
-        img.setAttribute("data-src", newUrl);
-        img.setAttribute("srcset", newUrl);
-        img.classList.remove("lazy");
-    }
-
-    if (source) {
-        source.srcset = newUrl;
-        source.setAttribute("data-srcset", newUrl);
-    }
-});
 
 // 2026-06-26
 // Start: move tabby and tamara under the prices ------------------------

@@ -1,5 +1,6 @@
 /**
  * Lunel Bundles — single entry for external sites (e.g. jsDelivr).
+ * banner-images.js loads first, independently of the chain below.
  * Loads assets strictly in order: salla-custom.css → style.css →
  * lunel-constants.js → badge-icons.js → products.js → bundles.js →
  * product-badges.js → custom-script.js → out-of-stock.js
@@ -93,6 +94,12 @@
       document.head.appendChild(s);
     });
   }
+
+  loadScript(urlFor('assets/js/banner-images.js')).catch(function (err) {
+    if (window.console && console.error) {
+      console.error(err && err.message ? err.message : err);
+    }
+  });
 
   loadCss(urlFor('assets/css/salla-custom.css'))
     .then(function () {

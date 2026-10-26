@@ -565,8 +565,13 @@
   }
   
   /* تخصيص عرض حقل الكمية */
+  .product-single #sticky-bar salla-quantity-input,
+  .product-single #sticky-bar .s-quantity-input-container {
+    width: 100%;
+  }
   .product-single #sticky-bar salla-quantity-input input.s-quantity-input-input {
-    width: 260px;
+    width: auto;
+    flex: 1;
   }
   
   /* تحسين شكل الأزرار */

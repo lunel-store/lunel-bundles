@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  window.OUT_OF_STOCK_PRODUCTS = [1904366049, 1644875761, 2094249977];
+  window.OUT_OF_STOCK_PRODUCTS = [1494851272, 1467931160, 1822939513];
   var scriptSrc = document.currentScript && document.currentScript.src;
   var baseFromScript = null;
   try {
